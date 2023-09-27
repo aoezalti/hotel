@@ -1,70 +1,63 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Whatever Hotelbooking site</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Lorem</a></li>
-                <li><a class="dropdown-item" href="#">Lorem2</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="./impressum.html">Impressum</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
-      </div>
-    </nav>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    </script>
+    <div id="nav-placeholder"></div>
+    <script>
+        $.get("header.html", function(data){
+            $("#nav-placeholder").replaceWith(data);
+        });
+    </script> 
   </head>
   <body>
+    <style>
+     div{
+        margin-left: 2%;
+        margin-top: 2%;
+        justify-content: left;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      h1{
+        font-size: x-large;
+        font-weight: bold;
+      }
+      h2{
+        font-size: larger;
+        font-weight: bold;
+      }
+      h3{
+        font-size: large;
+        font-weight: bold;
+      }
+
+    </style>
+
+    <div class="impressum">
     <h1>Impressum</h1>
     <br>
-    <br>
-    <h2 style = "text-align: left">Whatever Hotelbooking GmbH</h2>
-     Hotelbetrieb <br>
-    
-     UID-Nr: ATU00000001<br>
-     Firmenbuchnummer: 000000r<br>
+    <h2>Hotel Technikum GmbH</h2>
+    <p> Hotelbetrieb</p>
+     <h3>UID-Nummer</h3>
+     <p>UID-Nr: ATU00000001</p>
+     <h3>Firmenbuch</h3>
+     <p>Firmenbuchnummer: 000000r <br>
      Firmenbuchgericht: Wien<br>
-     1010 Wien, Teststraße 1<br>
-     Kontakt:<br> 
+     1010 Wien, Teststraße 1</p>
+     <h3>Kontakt</h3>
+     <p>
      Tel.: +43000001<br>
      Mail: whateverbooking@randomDomain.com<br>
-     Mitgliedschaft: WKO, ÖHV   <br>
-     Verbraucher haben die Möglichkeit,<br>
-     Beschwerden an die Online-<br>
-     Streitbeilegungsplattform der EU zu<br>
-     richten: <a href ="https://ec.europa.eu/odr">https://ec.europa.eu/odr</a>.<br>
-     Für andere Anfragen können Sie auch die angeführte<br>
-     E-Mail-Adresse verwenden.<br>
-     richten.<br>
-
+    </p>
+    <h3>Mitgliedschaft</h3>
+    <p>WKO, ÖHV   <br></p>
+    <h3>Hinweise</h3>
+    <p>
+     Verbraucher haben die Möglichkeit, Beschwerden an die Online <br>
+     Streitbeilegungsplattform der EU zu richten: <a href ="https://ec.europa.eu/odr">https://ec.europa.eu/odr</a>.<br>
+     Für andere Anfragen können Sie auch die angeführte E-Mail-Adresse verwenden.<br>
+    </p>
+    </div>
 
 
 
