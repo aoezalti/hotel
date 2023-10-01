@@ -15,45 +15,38 @@
         });
     </script> 
   </head>
-<style>
-    .main-div{
-        padding: 1%;
-        display: grid;
-    }
-    div,label{
-        padding: 1%;
-    }
-    button,input, h3{
-        margin-left: 1%;
-    }
-    
-</style>
+
   <div class="main-div">
     <form>
         <h3>Registrierung</h3>
         <br>
-        <div class="form-group">
-            <label for="inputAnrede" style="font-weight: bold;">Anrede</label>
-            <input type="text" class="form-control" id="inputAnrede" placeholder="Frau/Herr/Divers">
+        <div class="selection">
+          <label for="select-anrede">Anrede</label>  
+          <select name ="Anrede" id="select-anrede">
+              <option value="" disabled selected>Bitte auswählen</option>
+              <option value="Frau">Frau</option>
+              <option value="Herr">Herr</option>
+              <option value="Divers">Divers</option>
+            </select>
         </div>
             <div class="form-group">
-                <label for="inputVorname"style="font-weight: bold;">Vorname</label>
+                <label for="inputVorname">Vorname</label>
               <input type="text" class="form-control" id="inputVorname" placeholder="Vorname">
             </div>
             <div class="form-group">
-                <label for="inputNachname"style="font-weight: bold;">Nachname</label>
+                <label for="inputNachname">Nachname</label>
               <input type="text" class="form-control"id="inputNachname" placeholder="Nachname">
             </div>
         <div class="form-group">
-          <label for="exampleInputEmail1"style="font-weight: bold;">Email Adresse</label>
+          <label for="exampleInputEmail1">Email Adresse</label>
           <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-Mail-Adresse">
         </div>
         <div class="form-group">
-            <label for="inputUsername"style="font-weight: bold;">Benutzername</label>
+            <label for="inputUsername">Benutzername</label>
             <input type="text" class="form-control" id="inputUsername" placeholder="Benutzername">
           </div>
         <div class="form-group">
-          <label for="exampleInputPassword1"style="font-weight: bold;">Passwort</label>
+          <label for="exampleInputPassword1">Passwort</label>
           <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Passwort">
         </div>
         <br>
