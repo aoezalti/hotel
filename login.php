@@ -10,27 +10,10 @@
         </script> 
         <div id="nav-placeholder"></div>
         <?php 
-    include 'nav.php';
-    ?> 
+    include 'nav.php'; ?> 
       </head>
-    <style>
-        .main-div{
-            padding: 1%;
-            display: grid;
-        }
-        .password, .username, .form-group{
-            padding: 1%;
-        }
-        button,input, h3{
-            margin-left: 1%;
-        }
-        
-    </style>
-
-<div class="container">
-    <div class="row justify-content-left">
-
-        <form class="col-5" method="post">
+<div class="main-div">
+    <form method="post">
             <h3>Login</h3>
             <div class="form-group">
                 <label class="username" for="inputUsername"style="font-weight: bold;">Benutzername</label>
@@ -40,8 +23,9 @@
                 <label class="password" for="exampleInputPassword1"style="font-weight: bold;">Passwort</label>
                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Passwort">
             </div>
+           <button type ="submit" class="btn btn-primary">Login</button>     
         </form>
     </div>
-</div>
-
+    
+<link rel="stylesheet" href="./style.css">
 </html>
