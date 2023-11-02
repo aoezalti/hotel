@@ -9,18 +9,16 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
         </script> 
         <div id="nav-placeholder"></div>
-        <script>
-            $.get("header.html", function(data){
-                $("#nav-placeholder").replaceWith(data);
-            });
-        </script> 
+        <?php 
+    include 'nav.php';
+    ?> 
       </head>
     <style>
         .main-div{
             padding: 1%;
             display: grid;
         }
-        div,label{
+        .password, .username, .form-group{
             padding: 1%;
         }
         button,input, h3{
@@ -33,14 +31,12 @@
 
         <form method="post">
             <h3>Login</h3>
-            
-            
             <div class="form-group">
-                <label for="inputUsername"style="font-weight: bold;">Benutzername</label>
+                <label class="username" for="inputUsername"style="font-weight: bold;">Benutzername</label>
                 <input type="text" class="form-control" id="inputUsername" placeholder="Benutzername">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1"style="font-weight: bold;">Passwort</label>
+                <label class="password" for="exampleInputPassword1"style="font-weight: bold;">Passwort</label>
                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Passwort">
             </div>
            <button type ="submit" class="btn btn-primary">Login</button>     

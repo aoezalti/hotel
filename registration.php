@@ -9,23 +9,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     </script> 
     <div id="nav-placeholder"></div>
-    <script>
-        $.get("header.html", function(data){
-            $("#nav-placeholder").replaceWith(data);
-        });
-    </script> 
+    <?php 
+    include 'nav.php';
+    ?>
   </head>
 <style>
-    .main-div{
-        padding: 1%;
-        display: grid;
-    }
-    div,label{
-        padding: 1%;
-    }
-    button,input, h3{
-        margin-left: 1%;
-    }
+     .main-div{
+            padding: 1%;
+            display: grid;
+        }
+        .password, .username, .form-group, .vorname, .nachname, .email{
+            padding: 1%;
+        }
+        button,input, h3{
+            margin-left: 1%;
+        }
     
 </style>
   <div class="main-div">
@@ -37,23 +35,23 @@
             <input type="text" class="form-control" id="inputAnrede" placeholder="Frau/Herr/Divers">
         </div>
             <div class="form-group">
-                <label for="inputVorname"style="font-weight: bold;">Vorname</label>
+                <label class="vorname" for="inputVorname"style="font-weight: bold;">Vorname</label>
               <input type="text" class="form-control" id="inputVorname" placeholder="Vorname">
             </div>
             <div class="form-group">
-                <label for="inputNachname"style="font-weight: bold;">Nachname</label>
+                <label class="nachname" for="inputNachname"style="font-weight: bold;">Nachname</label>
               <input type="text" class="form-control"id="inputNachname" placeholder="Nachname">
             </div>
         <div class="form-group">
-          <label for="exampleInputEmail1"style="font-weight: bold;">Email Adresse</label>
+          <label class ="email" for="exampleInputEmail1"style="font-weight: bold;">Email Adresse</label>
           <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-Mail-Adresse">
         </div>
         <div class="form-group">
-            <label for="inputUsername"style="font-weight: bold;">Benutzername</label>
+            <label class="username" for="inputUsername"style="font-weight: bold;">Benutzername</label>
             <input type="text" class="form-control" id="inputUsername" placeholder="Benutzername">
           </div>
         <div class="form-group">
-          <label for="exampleInputPassword1"style="font-weight: bold;">Passwort</label>
+          <label class="password" for="exampleInputPassword1"style="font-weight: bold;">Passwort</label>
           <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Passwort">
         </div>
         <br>
