@@ -9,23 +9,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     </script> 
     <div id="nav-placeholder"></div>
-    <script>
-        $.get("header.html", function(data){
-            $("#nav-placeholder").replaceWith(data);
-        });
-    </script> 
+    <?php 
+    include 'nav.php';
+    ?>
   </head>
   <body> 
-<style>
 
-  div{
-    margin-left: 0%;
-    margin-top: 0%;
+  <style>
+    h4{
+      font-size: 35px;
     }
+    p{
+      font-size: 20px;
+    }
+  </style>
 
-</style>
- 
-    <div id="carouselExampleIndicators" class="carousel slide">
+  <div id="carouselExampleIndicators" class="carousel slide">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -34,6 +33,10 @@
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img src="./assets/luxurious-modern-bedroom-with-comfortable-bedding-elegance-generated-by-ai.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+    <h4>Hotel Technikum</h5>
+    <p>Book now!</p>
+  </div>
         </div>
         <div class="carousel-item">
           <img src="./assets/luxury-apartment-with-modern-design-elegance-generated-by-ai (2).jpg" class="d-block w-100" alt="...">
@@ -48,7 +51,12 @@
       <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
       </button>
-    </div>
-  
+
+      <style>
+        .jumbotron{
+          padding: 2%;
+        }
+      
+      </style>
   </body>
 </html>

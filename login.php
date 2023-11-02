@@ -9,18 +9,16 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
         </script> 
         <div id="nav-placeholder"></div>
-        <script>
-            $.get("header.html", function(data){
-                $("#nav-placeholder").replaceWith(data);
-            });
-        </script> 
+        <?php 
+    include 'nav.php';
+    ?> 
       </head>
     <style>
         .main-div{
             padding: 1%;
             display: grid;
         }
-        div,label{
+        .password, .username, .form-group{
             padding: 1%;
         }
         button,input, h3{
@@ -34,20 +32,13 @@
 
         <form class="col-5" method="post">
             <h3>Login</h3>
-            <div class="form-floating mb-3">
-                <input class="form-control border-primary" id="user" class="form-control" type="text" name="user" placeholder="e" required="true"/>
-                <label for="user">Username</label>
+            <div class="form-group">
+                <label class="username" for="inputUsername"style="font-weight: bold;">Benutzername</label>
+                <input type="text" class="form-control" id="inputUsername" placeholder="Benutzername">
             </div>
-           
-            <div class="form-floating mb-3">
-                <input class="form-control border-primary" id="password" class="form-control" type="password" name="password" placeholder="e" required="true" />
-                <label for="password">Passwort</label>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <input class="btn btn-outline-danger" type="reset" value="Reset">
-                    <input class="btn btn-outline-primary" type="submit" value="Submit">
-                </div>
+            <div class="form-group">
+                <label class="password" for="exampleInputPassword1"style="font-weight: bold;">Passwort</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Passwort">
             </div>
         </form>
     </div>

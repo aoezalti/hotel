@@ -4,14 +4,32 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     </script>
     <div id="nav-placeholder"></div>
-    <script>
-        $.get("header.html", function(data){
-            $("#nav-placeholder").replaceWith(data);
-        });
-    </script> 
+    <?php 
+    include 'nav.php';
+    ?> 
   </head>
   <body>
-    
+    <style>
+     .impressum{
+        margin-left: 2%;
+        margin-top: 2%;
+        justify-content: left;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      h1{
+        font-size: x-large;
+        font-weight: bold;
+      }
+      h2{
+        font-size: larger;
+        font-weight: bold;
+      }
+      h3{
+        font-size: large;
+        font-weight: bold;
+      }
+
+    </style>
 
     <div class="impressum">
     <h1>Impressum</h1>
