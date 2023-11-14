@@ -51,12 +51,5 @@
       <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
       </button>
-
-      <style>
-        .jumbotron{
-          padding: 2%;
-        }
-      
-      </style>
   </body>
 </html>

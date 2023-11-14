@@ -68,7 +68,7 @@ $upper = preg_match('@[A-Z]@',$password);
 $lower = preg_match('@[a-z]@',$password);
 $number = preg_match('@[0-9]@',$password);
 
-if($upper || $lower || $number || strlen($password)<6 )
+if($upper || $lower || $number || strlen($password)<8 )
     $passwordCriterianotMet = "Das Passwort muss mindestens 8-stellig sein, Groß- und Kleinbuchstaben, sowie eine Zahl enthalten!";
 }
 
@@ -91,7 +91,7 @@ if($upper || $lower || $number || strlen($password)<6 )
             <div class="form-floating mb-2">
                 <input class="form-control border-primary <?php if (!empty($vornameError)) {
                                                                 echo "is-invalid";
-                                                            } ?>" id="inputVorname" class="form-control" type="text" name="vorname" placeholder="e" required="true" value ="<?php echo $vorname;?>"/>
+                                                            } ?>" id="inputVorname" class="form-control" type="text" name="vorname" placeholder="e" required="true" value ="<?php if(!empty($vorname)) echo $vorname;?>"/>
                 <label for="inputVorname">Vorname</label>
                 <div class="invalid-feedback">
                     <?php echo $vornameError; ?>
@@ -101,7 +101,7 @@ if($upper || $lower || $number || strlen($password)<6 )
             <div class="form-floating mb-3">
                 <input class="form-control border-primary <?php if (!empty($nachnameError)) {
                                                                 echo "is-invalid";
-                                                            } ?>" id="inputNachname" class="form-control" type="text" name="nachname" placeholder="e" required="true" value ="<?php echo $nachname;?>"/>
+                                                            } ?>" id="inputNachname" class="form-control" type="text" name="nachname" placeholder="e" required="true" value ="<?php if(!empty($nachname)) echo $nachname;?>"/>
                 <label for="inputNachname">Nachname</label>
                 <div class="invalid-feedback">
                     <?php echo $nachnameError; ?>
@@ -111,7 +111,7 @@ if($upper || $lower || $number || strlen($password)<6 )
             <div class="form-floating mb-3">
                 <input class="form-control border-primary <?php if (!empty($userError)) {
                                                                 echo "is-invalid";
-                                                            } ?>" id="user" class="form-control" type="text" name="user" placeholder="e" required="true" value ="<?php echo $user;?>"/>
+                                                            } ?>" id="user" class="form-control" type="text" name="user" placeholder="e" required="true" value ="<?php if(!empty($user)) echo $user;?>"/>
                 <label for="user">Username</label>
                 <div class="invalid-feedback">
                     <?php echo $userError; ?>
@@ -121,7 +121,7 @@ if($upper || $lower || $number || strlen($password)<6 )
             <div class="form-floating mb-3">
                 <input class="form-control border-primary <?php if (!empty($mailError)) {
                                                                 echo "is-invalid";
-                                                            } ?>" id="email" class="form-control" type="email" name="email" placeholder="e" required="true" value ="<?php echo $email;?>" />
+                                                            } ?>" id="email" class="form-control" type="email" name="email" placeholder="e" required="true" value ="<?php if(!empty($email)) echo $email;?>" />
                 <label for="email">E-Mail</label>
                 <div class="invalid-feedback">
                     <?php echo $mailError; ?>
@@ -134,9 +134,9 @@ if($upper || $lower || $number || strlen($password)<6 )
                                                             } ?>" id="password" class="form-control" type="password" name="password" placeholder="e" required="true" />
                 <label for="password">Passwort</label>
                 <div class="invalid-feedback">
-                    <?php echo $passwordError; ?>
-                    <?php echo $passwordConfError; ?>
-                    <?php echo $passwordCriterianotMet; ?>
+                    <?php if(!empty($passwordError)) echo $passwordError; ?>
+                    <?php if(!empty($passwordConfError)) echo $passwordConfError; ?>
+                    <?php if(!empty($passwordCriterianotMet)) echo $passwordCriterianotMet; ?>
                 </div>
             </div>
 
@@ -146,8 +146,8 @@ if($upper || $lower || $number || strlen($password)<6 )
                                                             } ?>" id="password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="e" required="true" />
                 <label for="password_confirmation">Passwort erneut eingeben!</label>
                 <div class="invalid-feedback">
-                    <?php echo $passwordConfError; ?>
-                    <?php echo $passwordNotEqual; ?>
+                    <?php if(!empty($passwordConfError)) echo $passwordConfError; ?>
+                    <?php if(!empty($passwordNotEqual)) echo $passwordNotEqual; ?>
                     
                 </div>
             </div>

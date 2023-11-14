@@ -1,3 +1,6 @@
+<?php
+session_start();  
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,9 +11,14 @@
     </script>
     <div id="nav-placeholder"></div>
     <?php
-    include 'nav.php'; ?>
+include 'nav.php';  
+
+  
+?>
 </head>
 <?php 
+
+
 
 function cleanUserInput($input)
 {
@@ -24,6 +32,9 @@ function cleanUserInput($input)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user                  = cleanUserInput($_POST["inputUsername"]);
     $password              = cleanUserInput($_POST["inputPassword"]);
+    $userArr[$user]        = $password; 
+    $_SESSION["userArr"]   = $user;
+    $_SESSION["loggedIn"]  = true;
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
@@ -40,12 +51,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 <div class="main-div">
-    <form method="post" class="col-2" action="login.php">
+<?php if(!isset($_SESSION["userArr"])) : ?>
+    <form method="POST" class="col-2" action="login.php">
 
         <h3>Login</h3>
         <div class="form-group">
             <label class="username" for="inputUsername" style="font-weight: bold;">Benutzername</label>
-            <input type="text" class="form-control border-primary <?php if (!empty($userError)) {echo "is-invalid";}?>" id="inputUsername" name="inputUsername" placeholder="Benutzername" value="<?php echo $user?>"/>
+            <input type="text" class="form-control border-primary <?php if (!empty($userError)) {echo "is-invalid";}?>" id="inputUsername" name="inputUsername" placeholder="Benutzername" value="<?php if(!empty($user)) echo $user?>"/>
             <div class="invalid-feedback">
                   <?php echo $userError; ?>
                 </div>
@@ -58,21 +70,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
         </div>
         <div class="row">
+
             <div class="col">
                 <input class="btn btn-outline-danger" type="reset" value="Reset">
                 <input class="btn btn-outline-primary" type="submit" value="Login">
             </div>
+            <?php else: ?> 
+                <div class="col">
+                <?php
+                    echo "<h3>Welcome " . $_SESSION["userArr"] . "!</h3>"; 
+                    $_SESSION["loggedIn"] = true;
+                    header('Location: index.php');
+                    ?> 
+                <form method="post" class="col-2" action="logout.php">
+                    <input class="btn btn-outline-primary" type="submit" value="Logout">
+                </form>
+                </div>
+            <?php endif ?>
         </div>
     </form>
 </div>
 
 
-<?php 
-if(!empty($user) && !empty($password)){
-    echo "<h3>Welcome " . $user . "!</h3>"; 
-}
+ 
 
-?> 
 <link rel="stylesheet" href="./style.css">
 
 </html>

@@ -1,3 +1,13 @@
+<?php 
+ 
+ if(!isset($_SESSION)) 
+ { 
+     session_start(); 
+
+ } 
+?>
+
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="https://www.technikum-wien.at/fhtw-logo.svg"/>
@@ -10,6 +20,7 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <style>
             .nav-item, .dropdown-item{
@@ -28,15 +39,39 @@
             More
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="./login.php">Login</a></li>
-            <li><a class="dropdown-item" href="./registration.php">Registrierung</a></li>
-            <li><hr class="dropdown-divider"></li>
+            
             <li><a class="dropdown-item" href="./impressum.php">Impressum</a></li>
           </ul>
         </li>
         <!--<li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
         </li>-->
+      </ul>
+      <ul class="navbar-nav me-right">
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php
+            if(isset($_SESSION["loggedIn"])){
+              echo "Welcome " . $_SESSION["userArr"] . "!";
+            }
+            else {
+              echo "Login/Register";
+            }
+            ?>
+            
+          </a>
+          
+          <ul class="dropdown-menu">
+           <?php if(isset($_SESSION["loggedIn"])) : ?>
+            <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
+
+            <?php else: ?> 
+              <li><a class="dropdown-item" href="./login.php">Login</a></li>
+              <?php endif ?>
+            <li><a class="dropdown-item" href="./registration.php">Registrierung</a></li>
+           
+          </ul>
+        </li>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
