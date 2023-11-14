@@ -34,9 +34,8 @@
     
         session_unset();
         session_destroy();
+        header('Location: index.php');
         ?>
-    <h3>  Successfully logged out! </h3>
-      
       </style>
   </body>
 </html>

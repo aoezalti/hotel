@@ -1,8 +1,12 @@
 <?php 
  
- session_start();
+ if(!isset($_SESSION)) 
+ { 
+     session_start(); 
 
+ } 
 ?>
+
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,8 +50,8 @@
       <ul class="navbar-nav me-right">
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <?php 
-            if($_SESSION["loggedIn"]){
+            <?php
+            if(isset($_SESSION["loggedIn"])){
               echo "Welcome " . $_SESSION["userArr"] . "!";
             }
             else {
@@ -58,10 +62,14 @@
           </a>
           
           <ul class="dropdown-menu">
-            
-            <li><a class="dropdown-item" href="./login.php">Login</a></li>
+           <?php if(isset($_SESSION["loggedIn"])) : ?>
+            <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
+
+            <?php else: ?> 
+              <li><a class="dropdown-item" href="./login.php">Login</a></li>
+              <?php endif ?>
             <li><a class="dropdown-item" href="./registration.php">Registrierung</a></li>
-            
+           
           </ul>
         </li>
       </ul>

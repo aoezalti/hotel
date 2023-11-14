@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h3>Login</h3>
         <div class="form-group">
             <label class="username" for="inputUsername" style="font-weight: bold;">Benutzername</label>
-            <input type="text" class="form-control border-primary <?php if (!empty($userError)) {echo "is-invalid";}?>" id="inputUsername" name="inputUsername" placeholder="Benutzername" value="<?php echo $user?>"/>
+            <input type="text" class="form-control border-primary <?php if (!empty($userError)) {echo "is-invalid";}?>" id="inputUsername" name="inputUsername" placeholder="Benutzername" value="<?php if(!empty($user)) echo $user?>"/>
             <div class="invalid-feedback">
                   <?php echo $userError; ?>
                 </div>
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
         </div>
         <div class="row">
-            
+
             <div class="col">
                 <input class="btn btn-outline-danger" type="reset" value="Reset">
                 <input class="btn btn-outline-primary" type="submit" value="Login">
@@ -78,9 +78,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php else: ?> 
                 <div class="col">
                 <?php
-                
                     echo "<h3>Welcome " . $_SESSION["userArr"] . "!</h3>"; 
-                    
+                    $_SESSION["loggedIn"] = true;
+                    header('Location: index.php');
                     ?> 
                 <form method="post" class="col-2" action="logout.php">
                     <input class="btn btn-outline-primary" type="submit" value="Logout">
