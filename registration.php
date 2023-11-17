@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<?php
+    include 'nav.php';
+    ?>
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,36 +9,18 @@
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </script>
-    <div id="nav-placeholder"></div>
-    <?php
-    include 'nav.php';
-    ?>
 </head>
 
 <?php
 
-
-function cleanUserInput($input)
-{
-
-    $input = trim($input);
-    $input = stripslashes($input);
-    $input = htmlspecialchars($input);
-
-    return $input;
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (($_SERVER["REQUEST_METHOD"] == "POST")) {
     $vorname               = cleanUserInput($_POST["vorname"]);
     $nachname              = cleanUserInput($_POST["nachname"]);
     $user                  = cleanUserInput($_POST["user"]);
     $email                 = cleanUserInput($_POST["email"]);
     $password              = cleanUserInput($_POST["password"]);
     $password_confirmation = cleanUserInput($_POST["password_confirmation"]);
-}
 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["vorname"])) {
         $vornameError = "Der Vorname ist ein Pflichtfeld!";
     }
@@ -59,11 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $passwordNotEqual = "Die Passwörter müssen übereinstimmen";
     }
 
-
+}
     
 /*
 regex check for password
 */
+function passwordRegex($password){
 $upper = preg_match('@[A-Z]@',$password);
 $lower = preg_match('@[a-z]@',$password);
 $number = preg_match('@[0-9]@',$password);
@@ -76,7 +62,7 @@ if($upper || $lower || $number || strlen($password)<8 )
 <div class="container">
     <div class="row justify-content-left">
 
-        <form class="col-5" method="post" action="registration.php">
+        <form class="col-5" name "create" method="post" action="registration.php">
             <h3>Registrierung</h3>
             <div class="col-4">
                 <div class="form-floating mb-2">
@@ -91,7 +77,7 @@ if($upper || $lower || $number || strlen($password)<8 )
             <div class="form-floating mb-2">
                 <input class="form-control border-primary <?php if (!empty($vornameError)) {
                                                                 echo "is-invalid";
-                                                            } ?>" id="inputVorname" class="form-control" type="text" name="vorname" placeholder="e" required="true" value ="<?php if(!empty($vorname)) echo $vorname;?>"/>
+                                                            } ?>" id="inputVorname" class="form-control" type="text" name="inputVorname" placeholder="e" required="true" value ="<?php if(!empty($vorname)) echo $vorname;?>"/>
                 <label for="inputVorname">Vorname</label>
                 <div class="invalid-feedback">
                     <?php echo $vornameError; ?>
@@ -101,7 +87,7 @@ if($upper || $lower || $number || strlen($password)<8 )
             <div class="form-floating mb-3">
                 <input class="form-control border-primary <?php if (!empty($nachnameError)) {
                                                                 echo "is-invalid";
-                                                            } ?>" id="inputNachname" class="form-control" type="text" name="nachname" placeholder="e" required="true" value ="<?php if(!empty($nachname)) echo $nachname;?>"/>
+                                                            } ?>" id="inputNachname" class="form-control" type="text" name="inputNachname" placeholder="e" required="true" value ="<?php if(!empty($nachname)) echo $nachname;?>"/>
                 <label for="inputNachname">Nachname</label>
                 <div class="invalid-feedback">
                     <?php echo $nachnameError; ?>

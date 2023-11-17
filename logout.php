@@ -1,10 +1,12 @@
-<?php session_start();?>
+<?php
+session_start(); 
+$_SESSION["loggedIn"] = false;
+session_unset(); 
+session_destroy();
+header("Location: index.php");
+?>
 <!doctype html>
 <html lang="en">
-<?php 
-        
-        $_SESSION["loggedIn"] = false;
-        ?>
   <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
     rel="stylesheet" 
@@ -14,28 +16,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     </script> 
     <div id="nav-placeholder"></div>
-    <?php 
-    include 'nav.php';
-    ?>
   </head>
   <body> 
-
-  <style>
-    h4{
-      font-size: 35px;
-    }
-    p{
-      font-size: 20px;
-    }
-  </style>
-
-        <?php 
-        
-    
-        session_unset();
-        session_destroy();
-        header('Location: index.php');
-        ?>
       </style>
   </body>
 </html>
