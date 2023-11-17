@@ -41,35 +41,7 @@
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <?php session_start(); 
-       
-            function cleanUserInput($input)
-            {
-            
-                $input = trim($input);
-                $input = stripslashes($input);
-                $input = htmlspecialchars($input);
-            
-                return $input;
-            }
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $user                  = cleanUserInput(isset($_POST["inputUsername"]));
-                $password              = cleanUserInput(isset($_POST["inputPassword"]));
-                $userArr[$user]        = $password; 
-                $_SESSION["userArr"]   = $user;
-                $_SESSION["loggedIn"]  = true;
-            }
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                
-                if (empty($user)) {
-                    $userError = "User fehlt";
-                }
-                
-                if (empty($password)) {
-                    $passwordError = "Passwort fehlt";
-                }
-            
-            }
-            
+              
             if(isset($_SESSION["loggedIn"])){
               echo "Welcome " . $_SESSION["userArr"] . "!";
             }
@@ -83,11 +55,12 @@
           <ul class="dropdown-menu">
            <?php if(isset($_SESSION["loggedIn"])) :?>
             <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
-
+            <li><a class="dropdown-item" href="./profile.php">Profile</a></li>
             <?php else: ?> 
               <li><a class="dropdown-item" href="./login.php">Login</a></li>
+              <li><a class="dropdown-item" href="./registration.php">Registrierung</a></li>
               <?php endif ?>
-            <li><a class="dropdown-item" href="./registration.php">Registrierung</a></li>
+            
            
           </ul>
         </li>

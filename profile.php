@@ -1,4 +1,7 @@
-<?php session_start();?>
+<?php 
+    include 'nav.php';
+    ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -11,15 +14,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     </script> 
     <div id="nav-placeholder"></div>
-    <?php 
-    include 'nav.php';
-    ?>
+    
   </head>
   <body> 
     <h3>  Profile overview! </h3>
       <?php 
       echo "<h4> User: " .$_SESSION["userArr"] . "</h4>";
       ?>
-      </style>
+      
   </body>
 </html>
