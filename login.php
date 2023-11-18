@@ -1,5 +1,5 @@
 <?php
-session_start();  
+include 'nav.php';  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,50 +9,11 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </script>
-    <div id="nav-placeholder"></div>
-    <?php
-include 'nav.php';  
-
-  
-?>
 </head>
-<?php 
 
-
-
-function cleanUserInput($input)
-{
-
-    $input = trim($input);
-    $input = stripslashes($input);
-    $input = htmlspecialchars($input);
-
-    return $input;
-}
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $user                  = cleanUserInput($_POST["inputUsername"]);
-    $password              = cleanUserInput($_POST["inputPassword"]);
-    $userArr[$user]        = $password; 
-    $_SESSION["userArr"]   = $user;
-    $_SESSION["loggedIn"]  = true;
-}
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    if (empty($user)) {
-        $userError = "User fehlt";
-    }
-    
-    if (empty($password)) {
-        $passwordError = "Passwort fehlt";
-   
-    }
-
-}
-
-?>
 <div class="main-div">
 <?php if(!isset($_SESSION["userArr"])) : ?>
-    <form method="POST" class="col-2" action="login.php">
+    <form method="POST" name="login" class="col-2" action="login.php">
 
         <h3>Login</h3>
         <div class="form-group">
@@ -77,10 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <?php else: ?> 
                 <div class="col">
-                <?php
-                    echo "<h3>Welcome " . $_SESSION["userArr"] . "!</h3>"; 
-                    $_SESSION["loggedIn"] = true;
-                    header('Location: index.php');
+                <?php 
+                    echo "<h3>Welcome " . $user . "!</h3>"; 
                     ?> 
                 <form method="post" class="col-2" action="logout.php">
                     <input class="btn btn-outline-primary" type="submit" value="Logout">
@@ -90,10 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </form>
 </div>
-
-
- 
-
 <link rel="stylesheet" href="./style.css">
 
 </html>
