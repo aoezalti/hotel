@@ -6,15 +6,21 @@ include 'errorHandling.php';
 <html lang="en">
 <?php
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                $user                  = cleanUserInput($_POST["loginUsername"]);
-                $password              = cleanUserInput($_POST["loginPassword"]);
-                checkLogin($user,$password);
-            
-}
+
 
 ?>
 
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
+    crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    </script> 
+    <div id="nav-placeholder"></div>
+    
+  </head>
 
 <div class="main-div">
 <?php if(!isset($_SESSION["userArr"])) : ?>
@@ -48,9 +54,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                    
                     ?> 
                     <p>Login successful</p>
-                <form method="post" class="col-2" action="profile.php">
-                    <input class="btn btn-outline-primary" type="submit" value="View profile">
-                </form>
+               
+                    <a href="profile.php">view profile</a>
+               
                 <br>
                 <form method="post" class="col-2" action="logout.php">
                     <input class="btn btn-outline-primary" type="submit" value="Logout">

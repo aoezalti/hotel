@@ -1,6 +1,6 @@
 <?php 
     include 'nav.php';
-    ?>
+?>
 
 <!doctype html>
 <html lang="en">

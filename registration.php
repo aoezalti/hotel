@@ -12,31 +12,7 @@ include 'errorHandling.php';
     </script>
 </head>
 
-<?php
 
-if (($_SERVER["REQUEST_METHOD"] === "POST")) {
-    $vorname               = cleanUserInput($_POST["inputVorname"]);
-    $nachname              = cleanUserInput($_POST["inputNachname"]);
-    $user                  = cleanUserInput($_POST["user"]);
-    $email                 = cleanUserInput($_POST["email"]);
-    $password              = cleanUserInput($_POST["password"]);
-    $password_confirmation = cleanUserInput($_POST["password_confirmation"]);
-
-    list(
-        $passwordNotEqual,
-        $passwordCriterianotMet
-    ) =  checkRegistration(
-        $password,
-        $password_confirmation
-    );
-    if (registrationSuccessful($passwordNotEqual, $passwordCriterianotMet)) {
-        $_SESSION["registered"] = true;
-        $_SESSION["loggedIn"] = true;
-        $_SESSION["userArr"] = $user;
-    }
-}
-
-?>
 
 <div class="container">
     <div class="row justify-content-left">
