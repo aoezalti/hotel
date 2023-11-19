@@ -31,7 +31,6 @@ if(isset($_POST["login"])){
       }
     }
 ?>    
-
 <?php if(!isset($_SESSION["userArr"])) : ?>
     <div class=container justify-content-left>
     <form method="POST" name="login" class="form-horizontal" action="login.php">
@@ -60,23 +59,17 @@ if(isset($_POST["login"])){
         </div>
 </div>
             <?php else: ?> 
-                <div class=container justify-content-left>
-                <?php 
-                    echo "<h1>Welcome " . $_SESSION["userArr"] . "!</h1>";
-                    ?> 
-                    <p>Login successful</p>
-                    <div class="col-sm-offset-2 col-sm-10">
-                    <a class="btn btn-primary" role="button" href="profile.php">View profile</a>
-                </div>
-                <br>
+                <?php
+                header("Location: profile.php");
+                ?>
                 <form method="POST" action="logout.php">
                     <input class="btn btn-outline-primary" type="submit" value="Logout">
                 </form></div>
 </div>
             <?php endif ?>
        <?php 
-       if($_SERVER["REQUEST_METHOD"]==="POST" && !checkLogin($user,$password)){
-        echo "<h3>User not found, or password wrong</h3>";
+       if( (isset($_POST["login"])) && !checkLogin($_POST["loginUsername"], $_POST["loginPassword"])){
+        echo "<div><h3>User not found, or password wrong</h3></div>";
        }
        ?>
     </form>

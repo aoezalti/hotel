@@ -17,6 +17,7 @@
 
 </head>
 <body>
+<div class=container justify-content-left>
     <h1>News-Beiträge</h1>
     <?php
     
@@ -64,10 +65,10 @@
             "text" => "Dies ist der zweite Beitrag."
         ),
         array(
-            "title" => $_POST["title"],
-            "date" => $_POST[""],
-            "image" => $thumbnail_path,
-            "text" => $_POST["text"]
+            "title" => (!empty($_POST["title"])) ? $_POST["title"] : "",
+            "date" => (!empty($_POST["title"])) ? date('Y-m-d') : "",
+            "image" => (!empty($_POST["title"])) ? $thumbnail_path : "",
+            "text" => (!empty($_POST["title"])) ? $_POST["text"] : ""
         )
     );
     foreach ($posts as $post) {
@@ -91,5 +92,6 @@
         <input type="submit" value="Hochladen" name="submit">
     </form>
     <?php endif?>
+    </div>
 </body>
 </html>

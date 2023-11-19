@@ -15,7 +15,12 @@
     </script> 
   </head>
   <body> 
-    <div class="container"><h3>  Profile overview </h3>
+    <div class="container">
+    <?php 
+      echo "<h1> Welcome ".$_SESSION["userArr"] . "</h4>";
+      ?>
+    <h3>  Profile overview </h3>
+    
       <?php 
       echo "<h4> User: " .$_SESSION["userArr"] . "</h4>";
       ?>

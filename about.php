@@ -18,7 +18,7 @@
 <body>
     
     
-    
+    <div class="container">
     <br>
     <h2>FAQs</h2>
     <hr color="green"/>
@@ -27,7 +27,7 @@
 	<p>Sie können ein Zimmer auf unserer Homepage buchen, indem Sie auf die Schaltfläche "Book now" klicken und das Buchungsformular ausfüllen. Für diesen Vorgang ist ein Account erforderlich. Registrierung, sowie Login befinden sich in der Menüleiste ganz rechts.</p>
 
 	<h3>Kann ich meine Buchung stornieren?</h3>
-	<p>Ja, Sie können Ihre Buchung stornieren. Bitte beachten Sie jedoch, dass Stornierungsbedingungen gelten können. Weitere Informationen finden Sie in unseren ABGs.</p>
+	<p>Ja, Sie können Ihre Buchung stornieren. Bitte beachten Sie jedoch, dass Stornierungsbedingungen gelten können. Weitere Informationen finden Sie in unseren AGBs.</p>
 
 	<h3>Wie kann ich meine Buchung ändern?</h3>
 	<p>Bitte kontaktieren Sie uns telefonisch, um Änderungen an Ihrer Buchung vorzunehmen.</p>
@@ -39,5 +39,6 @@
 	<p>Sie können Ihre Buchung online mit einer Kreditkarte bezahlen. Wir akzeptieren alle gängigen Karten.</p>
 
 	<p>In allen weiteren Fällen kontaktieren Sie uns bitte direkt, entweder telefonisch, oder via Mail.</p>
+</div>
 </body>
 </html>

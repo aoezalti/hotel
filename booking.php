@@ -52,6 +52,7 @@ include 'reservations.php';
                     <label class="form-check-label" for="pets">Haustiere</label>
 
                 </div>
+                <br>
             
                 <div class="row">
                     <div class="col">
@@ -64,8 +65,9 @@ include 'reservations.php';
     </div>
   
 </div>
+<div class="container">
 <h3>Bisherige Reservierungen: 0</h3>
-    
+    </div>
     
 </body>
 </html>
