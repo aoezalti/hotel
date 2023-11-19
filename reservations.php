@@ -86,9 +86,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     echo "Reservierung erfolgreich angelegt<br>";
     echo "Anreisetag: " . $_POST["start_date"] . "<br>";
     echo "Abreisetag: " . $_POST["end_date"] . "<br>";
-    echo "Frühstück: " . $_POST["breakfast"]  . "<br>";
-    echo "Parkplatz: " . $_POST["parking"] . "<br>";
-    echo "Haustiere: " . $_POST["pets"] . "<br>";
+    echo "Frühstück: " . ((!empty($_POST["breakfast"])) ? $_POST["breakfast"] : "" ) . "<br>";
+    echo "Parkplatz: " . ((!empty($_POST["parking"])) ? $_POST["parking"] : "" ) . "<br>";
+    echo "Haustiere: " . ((!empty($_POST["pets"])) ? $_POST["pets"] : "" ) . "<br>";
 }
         
         ?>
