@@ -48,7 +48,12 @@ function checkLogin($user,$password){
     if(empty($user) || empty($password)){
         return false;
     }
-    return true;
+    if($user === "Testuser" && $password === "testpw"){
+        return true;
+    }
+    if($user === "Admin" && $password === "admin"){
+        return true;
+    }
 }
 
 ?> 

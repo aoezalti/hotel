@@ -23,20 +23,23 @@
           <a class="nav-link active" aria-current="page" href="./index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link">About</a>
+          <a class="nav-link" href="about.php">About</a>
+        </li><li class="nav-item">
+          <a class="nav-link" href="news.php">News</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             More
           </a>
           <ul class="dropdown-menu">
-
+           
+             
             <li><a class="dropdown-item" href="./impressum.php">Impressum</a></li>
           </ul>
         </li>
-        <!--<li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>-->
+        <li class="nav-item">
+          <a class="nav-link <?php if(isset($_SESSION["loggedIn"])){echo "";}else{echo "disabled";} ?>" href="./booking.php" aria-disabled="false">Book now</a>
+        </li>
       </ul>
       <ul class="navbar-nav me-right">
         <li class="nav-item dropdown">
