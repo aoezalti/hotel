@@ -38,36 +38,6 @@
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
         </li>-->
       </ul>
-      <?php
-
-      if (($_SERVER["REQUEST_METHOD"] === "POST")) {
-        $vorname               = cleanUserInput($_POST["inputVorname"]);
-        $nachname              = cleanUserInput($_POST["inputNachname"]);
-        $user                  = cleanUserInput($_POST["user"]);
-        $email                 = cleanUserInput($_POST["email"]);
-        $password              = cleanUserInput($_POST["password"]);
-        $password_confirmation = cleanUserInput($_POST["password_confirmation"]);
-
-        list(
-          $passwordNotEqual,
-          $passwordCriterianotMet
-        ) =  checkRegistration(
-          $password,
-          $password_confirmation
-        );
-        if (registrationSuccessful($passwordNotEqual, $passwordCriterianotMet)) {
-          $_SESSION["registered"] = true;
-          $_SESSION["loggedIn"] = true;
-          $_SESSION["userArr"] = $user;
-        }
-      }
-      if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $user                  = cleanUserInput($_POST["loginUsername"]);
-        $password              = cleanUserInput($_POST["loginPassword"]);
-        checkLogin($user, $password);
-      }
-
-      ?>
       <ul class="navbar-nav me-right">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">

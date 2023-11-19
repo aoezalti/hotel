@@ -7,53 +7,36 @@ include 'nav.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     </script>
   </head>
-  <body>
-    <style>
-     .impressum{
-        margin-left: 2%;
-        margin-top: 2%;
-        justify-content: left;
-        font-family: Arial, Helvetica, sans-serif;
-      }
-      h1{
-        font-size: x-large;
-        font-weight: bold;
-      }
-      h2{
-        font-size: larger;
-        font-weight: bold;
-      }
-      h3{
-        font-size: large;
-        font-weight: bold;
-      }
-
-    </style>
-
-    <div class="impressum">
-    <h1>Impressum</h1>
+  <body>  
+    
     <br>
-    <h2>Hotel Technikum GmbH</h2>
-    <p> Hotelbetrieb</p>
-     <h3>UID-Nummer</h3>
-     <p>UID-Nr: ATU00000001</p>
-     <h3>Firmenbuch</h3>
-     <p>Firmenbuchnummer: 000000r <br>
-     Firmenbuchgericht: Wien<br>
-     1010 Wien, Teststraße 1</p>
-     <h3>Kontakt</h3>
-     <p>
-     Tel.: +43000001<br>
-     Mail: whateverbooking@randomDomain.com<br>
-    </p>
-    <h3>Mitgliedschaft</h3>
-    <p>WKO, ÖHV   <br></p>
-    <h3>Hinweise</h3>
-    <p>
+    <div class="container"> 
+      <h1>Impressum</h1>
+      <br>
+    
+    <h2>Hotel Technikum GmbH - Hotelbetrieb</h2>
+      <dl class="dl-horizontal"> 
+        <dt>UID-Nummer</dt>
+     <dd>ATU00000001</dd>
+     <dt>Firmenbuchnummer<dt>
+     <dd>000000r <dd>
+     <dt>Firmenbuchgericht<dt>
+     <dd>Wien<dd>
+     1010 Wien, Teststraße 1
+     <dt>Tel.</dt>
+     <dd>+43000001</dd>
+     <dt>Mail</dt>
+     <dd>whateverbooking@randomDomain.com</dd>
+    <dt>Mitgliedschaft</dt>
+    <dd>WKO, ÖHV </dd>
+    <br>
+    <h2>Hinweise</h2>
+    <dd>
      Verbraucher haben die Möglichkeit, Beschwerden an die Online <br>
      Streitbeilegungsplattform der EU zu richten: <a href ="https://ec.europa.eu/odr">https://ec.europa.eu/odr</a>.<br>
      Für andere Anfragen können Sie auch die angeführte E-Mail-Adresse verwenden.<br>
-    </p>
+     </dd>
+  </dl>
     </div>
 
 
