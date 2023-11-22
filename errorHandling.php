@@ -49,7 +49,7 @@ function checkLogin($user,$password){
         return false;
     }
     if($user === "Testuser" && $password === "testpw"){
-        $_SESSION["anrede"] ="Divers";
+        $_SESSION["anrede"] ="Mx.";
         $_SESSION["vorname"] = "Test";
         $_SESSION["nachname"] = "User";
         $_SESSION["mail"]   = "testuser@test.com";

@@ -28,7 +28,7 @@ if(isset($_POST["registration"]))
 else {
     
     if (!checkPasswordHealth($_POST["password"])) {
-        $pwCriteriaNotMet = "Das Passwort muss mindestens 8-stellig sein, Groß- und Kleinbuchstaben, sowie eine Zahl enthalten!";
+        $pwCriteriaNotMet = "Das Passwort muss mindestens 5-stellig sein, Groß- und Kleinbuchstaben, sowie eine Zahl enthalten!";
     }
     if (!checkPasswordEquality($_POST["password"],$_POST["password_confirmation"])) {
         $pwNotEqual = "Passwörter stimmen nicht überein!";
