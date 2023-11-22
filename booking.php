@@ -25,31 +25,31 @@ include 'reservations.php';
                 
                 <div class="form-floating mb-2">
                     <input class="form-control border-primary" type="date" name="start_date" id="start_date" required />
-                    <label for="start_date">Anreisedatum</label>
+                    <label for="start_date">Check-in</label>
 
                 </div>
 
                 <div class="form-floating mb-3">
                     <input class="form-control border-primary" type="date" name="end_date" id="end_date" required />
-                    <label for="end_date">Abreisedatum</label>
+                    <label for="end_date">Check-out</label>
 
                 </div>
 
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="breakfast" id="breakfast"/>
-                    <label class="form-check-label" for="breakfast">Frühstück</label>
+                    <label class="form-check-label" for="breakfast">include breakfast</label>
 
                 </div>
 
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="parking" id="parking"/>
-                    <label class="form-check-label" for="parking">Parkplatz</label>
+                    <label class="form-check-label" for="parking">include parking</label>
 
                 </div>
 
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="pets" id="pets"/>
-                    <label class="form-check-label" for="pets">Haustiere</label>
+                    <label class="form-check-label" for="pets">include pets</label>
 
                 </div>
                 <br>
@@ -66,7 +66,7 @@ include 'reservations.php';
   
 </div>
 <div class="container">
-<h3>Bisherige Reservierungen: 0</h3>
+<h3>Already booked reservations: 0</h3>
     </div>
     
 </body>

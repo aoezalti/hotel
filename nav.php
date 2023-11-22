@@ -4,7 +4,7 @@
 <link rel="icon" type="image/png" href="https://www.technikum-wien.at/fhtw-logo.svg" />
 <title>Hotel Technikum</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="./index.php">
       <img src="https://www.technikum-wien.at/fhtw-logo.svg" alt="" width="80" height="70"> </a>
@@ -24,7 +24,7 @@
           <a class="nav-link active" aria-current="page" href="./index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="about.php">About</a>
+          <a class="nav-link" href="about.php">FAQ</a>
         </li><li class="nav-item">
           <a class="nav-link" href="news.php">News</a>
         </li>
@@ -35,7 +35,7 @@
           <ul class="dropdown-menu">
            
              
-            <li><a class="dropdown-item" href="./impressum.php">Impressum</a></li>
+            <li><a class="dropdown-item" href="./impressum.php">Imprint</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -60,7 +60,7 @@
               <li><a class="dropdown-item" href="./profile.php">Profile</a></li>
             <?php else : ?>
               <li><a class="dropdown-item" href="./login.php">Login</a></li>
-              <li><a class="dropdown-item" href="./registration.php">Registrierung</a></li>
+              <li><a class="dropdown-item" href="./registration.php">Register</a></li>
             <?php endif ?>
           </ul>
         </li>
@@ -68,5 +68,5 @@
     </div>
   </div>
 </nav>
-
+<br><br><br><br>
 <link rel="stylesheet" href="./style.css">
