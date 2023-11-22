@@ -11,19 +11,10 @@ include 'nav.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     </script> 
-    <div id="nav-placeholder"></div>
   </head>
   <body> 
 
-  <style>
-    h4{
-      font-size: 35px;
-    }
-    p{
-      font-size: 20px;
-    }
-  </style>
-
+  <div>
   <div id="carouselExampleIndicators" class="carousel slide">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -34,7 +25,7 @@ include 'nav.php';
         <div class="carousel-item active">
           <img src="./assets/luxurious-modern-bedroom-with-comfortable-bedding-elegance-generated-by-ai.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
-    <h4>Hotel Technikum</h5>
+    <h4>Welcome to Hotel Technikum</h5>
     <p>Book now!</p>
   </div>
         </div>
@@ -51,5 +42,25 @@ include 'nav.php';
       <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
       </button>
+
+</div>
+<br>
+
+      <div class="container">
+<p class="lead">
+Welcome to Hotel Technikum, an elegant haven nestled in the heart of Vienna, where modern sophistication meets historic charm. Conveniently located near Vienna's cultural and business districts, our hotel is the perfect blend of comfort and style.
+</p>
+<hr  color="green"/>
+<p>
+Step into our meticulously designed lobby, adorned with contemporary art pieces and warm tones, setting the tone for a welcoming stay. Our well-appointed rooms and suites boast a harmonious fusion of Austrian tradition and cutting-edge technology, ensuring a restful retreat after a day of exploration or business meetings.
+<br>
+Indulge your taste buds at our onsite restaurant, where culinary delights crafted from locally sourced ingredients await. Enjoy a leisurely morning with our complimentary breakfast, or unwind with a signature cocktail in the evening at our stylish bar.
+<br>
+For those seeking relaxation, our wellness center offers a tranquil oasis with a spa, fitness facilities, and a rejuvenating sauna. Our attentive staff is dedicated to making your stay memorable, providing personalized service and local insights to enhance your Vienna experience.
+<br>
+With its prime location, Hotel Technikum offers easy access to Vienna's iconic landmarks, theaters, and museums. Whether you're here for business or leisure, make Hotel Technikum your home away from home in Vienna – where comfort, convenience, and culture converge seamlessly.
+</p>
+
+</div>
   </body>
 </html>

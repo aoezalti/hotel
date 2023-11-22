@@ -1,5 +1,5 @@
 <?php
-
+include 'nav.php';
 include 'errorHandling.php';
 ?>
 <!DOCTYPE html>
@@ -12,71 +12,97 @@ include 'errorHandling.php';
     </script>
 </head>
 
+<?php
+if(isset($_POST["registration"]))
+    if(checkPasswordHealth($_POST["password"]) && checkPasswordEquality($_POST["password"],$_POST["password_confirmation"])){
+    $vorname               = cleanUserInput(($_POST["inputVorname"]));
+    $nachname              = cleanUserInput(($_POST["inputNachname"]));
+    $user                  = cleanUserInput(($_POST["user"]));
+    $email                 = cleanUserInput(($_POST["email"]));
+    $password              = cleanUserInput(($_POST["password"]));
+    $password_confirmation = cleanUserInput(($_POST["password_confirmation"]));
+    $_SESSION["userArr"] = $user;
+    $_SESSION["loggedIn"] = true;
+    $_SESSION["registered"] = true;
+}
+else {
+    
+    if (!checkPasswordHealth($_POST["password"])) {
+        $pwCriteriaNotMet = "Das Passwort muss mindestens 8-stellig sein, Groß- und Kleinbuchstaben, sowie eine Zahl enthalten!";
+    }
+    if (!checkPasswordEquality($_POST["password"],$_POST["password_confirmation"])) {
+        $pwNotEqual = "Passwörter stimmen nicht überein!";
+    }
+  }
 
+  
+  ?>
 
 <div class="container">
     <div class="row justify-content-left">
         <?php if (!isset($_SESSION["registered"])) : ?>
-            <form class="col-5" name="create" method="post" action="registration.php">
+            <form class="col-5" name="registration" method="POST" action="registration.php">
                 <h3>Registrierung</h3>
+                <br>
+
                 <div class="col-4">
-                    <div class="form-floating mb-2">
-                        <select class="form-select border-secondary" class="form-control" aria-label="Default select example">
+                    <div class="mb-2">
+                        <select class="form-select border-secondary" class="form-control" aria-label="">
                             <option selected disabled>Anrede</option>
-                            <option value="1">Frau</option>
-                            <option value="2">Herr</option>
-                            <option value="3">Divers</option>
+                            <option value="Frau">Frau</option>
+                            <option value="Herr">Herr</option>
+                            <option value="Divers">Divers</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-floating mb-2">
-                    <input class="form-control border-primary ?>" id="inputVorname" class="form-control" type="text" name="inputVorname" placeholder="e" required="true" value="" />
+                    <input class="form-control border-primary" id="inputVorname" class="form-control" type="text" name="inputVorname" placeholder="" required="true" value="" />
                     <label for="inputVorname">Vorname</label>
 
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control border-primary  id=" inputNachname" class="form-control" type="text" name="inputNachname" placeholder="e" required="true" value="" />
+                    <input class="form-control border-primary" id="inputNachname" class="form-control" type="text" name="inputNachname" placeholder="" required="true" value="" />
                     <label for="inputNachname">Nachname</label>
 
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control border-primary id=" user" class="form-control" type="text" name="user" placeholder="e" required="true" value="" />
+                    <input class="form-control border-primary" id=" user" class="form-control" type="text" name="user" placeholder="" required="true" value="" />
                     <label for="user">Username</label>
 
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control border-primary id=" email" class="form-control" type="email" name="email" placeholder="e" required="true" value="" />
+                    <input class="form-control border-primary" id=" email" class="form-control" type="email" name="email" placeholder="" required="true" value="" />
                     <label for="email">E-Mail</label>
 
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control border-primary <?php if (!empty($passwordCriterianotMet)) {
+                    <input class="form-control border-primary <?php if (!empty($pwCriteriaNotMet)) {
                                                                     echo "is-invalid";
-                                                                } ?>" id="password" class="form-control" type="password" name="password" placeholder="e" required="true" />
+                                                                } ?>" id="password" class="form-control" type="password" name="password" placeholder="" required="true" />
                     <label for="password">Passwort</label>
                     <div class="invalid-feedback">
-                        <?php if (!empty($passwordCriterianotMet)) echo $passwordCriterianotMet; ?>
+                        <?php if (!empty($pwCriteriaNotMet)) echo $pwCriteriaNotMet ; ?>
                     </div>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control border-primary <?php if (!empty($passwordNotEqual)) {
+                    <input class="form-control border-primary <?php if (!empty($pwNotEqual)) {
                                                                     echo "is-invalid";
-                                                                } ?>" id="password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="e" required="true" />
+                                                                } ?>" id="password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="" required="true" />
                     <label for="password_confirmation">Passwort erneut eingeben!</label>
                     <div class="invalid-feedback">
-                        <?php if (!empty($passwordNotEqual)) echo $passwordNotEqual; ?>
+                        <?php if (!empty($pwNotEqual)) echo $pwNotEqual ?>
 
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <input class="btn btn-outline-danger" type="reset" value="Reset">
-                        <input class="btn btn-outline-primary" type="submit" value="Submit">
+                        <input class="btn btn-outline-primary" type="submit" name="registration" value="Submit">
                     </div>
                 </div>
 

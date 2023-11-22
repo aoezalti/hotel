@@ -1,4 +1,5 @@
-<meta charset="utf-8">
+ <?php session_start() ?>
+ <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="https://www.technikum-wien.at/fhtw-logo.svg" />
 <title>Hotel Technikum</title>
@@ -10,7 +11,7 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <?php session_start() ?>
+   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <style>
         .nav-item,
@@ -23,51 +24,24 @@
           <a class="nav-link active" aria-current="page" href="./index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link">About</a>
+          <a class="nav-link" href="about.php">About</a>
+        </li><li class="nav-item">
+          <a class="nav-link" href="news.php">News</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             More
           </a>
           <ul class="dropdown-menu">
-
+           
+             
             <li><a class="dropdown-item" href="./impressum.php">Impressum</a></li>
           </ul>
         </li>
-        <!--<li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>-->
+        <li class="nav-item">
+          <a class="nav-link <?php if(isset($_SESSION["loggedIn"])){echo "";}else{echo "disabled";} ?>" href="./booking.php" aria-disabled="false">Book now</a>
+        </li>
       </ul>
-      <?php
-
-      if (($_SERVER["REQUEST_METHOD"] === "POST")) {
-        $vorname               = cleanUserInput($_POST["inputVorname"]);
-        $nachname              = cleanUserInput($_POST["inputNachname"]);
-        $user                  = cleanUserInput($_POST["user"]);
-        $email                 = cleanUserInput($_POST["email"]);
-        $password              = cleanUserInput($_POST["password"]);
-        $password_confirmation = cleanUserInput($_POST["password_confirmation"]);
-
-        list(
-          $passwordNotEqual,
-          $passwordCriterianotMet
-        ) =  checkRegistration(
-          $password,
-          $password_confirmation
-        );
-        if (registrationSuccessful($passwordNotEqual, $passwordCriterianotMet)) {
-          $_SESSION["registered"] = true;
-          $_SESSION["loggedIn"] = true;
-          $_SESSION["userArr"] = $user;
-        }
-      }
-      if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $user                  = cleanUserInput($_POST["loginUsername"]);
-        $password              = cleanUserInput($_POST["loginPassword"]);
-        checkLogin($user, $password);
-      }
-
-      ?>
       <ul class="navbar-nav me-right">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">

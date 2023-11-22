@@ -1,6 +1,5 @@
 <?php
 
-include 'nav.php';
 function cleanUserInput($input)
             {
             
@@ -21,7 +20,7 @@ function checkRegistration(
     $pwHealth = checkPasswordHealth($password);
     return array(
 
-        $passwordNotEqual,
+       isset($passwordNotEqual),
         $pwHealth
     );
 }
@@ -32,28 +31,29 @@ function checkPasswordHealth($password)
     $number = preg_match('@[0-9]@', $password);
 
     if ($upper === 0 || $lower === 0 || $number === 0 || strlen($password) < 5) {
-        $passwordCriterianotMet = "Das Passwort muss mindestens 5-stellig sein, jeweils einen Groß- und Kleinbuchstaben, sowie eine Zahl enthalten!";
+        return false;
     }
-    return $passwordCriterianotMet;
+    return true;
 }
 
-
-function registrationSuccessful($passwordNotEqual, $pwHealth)
-{
-    if (empty($passwordNotEqual) && empty($pwHealth)) {
-        $_SESSION["loggedIn"] =true; 
-        $_SESSION["registered"] = true;
+function checkPasswordEquality($password, $password_confirmation){
+    if($password == $password_confirmation) {
         return true;
     }
     return false;
 }
 
+
 function checkLogin($user,$password){
-    if(!empty($user) && !empty($password)){
-        $_SESSION["loggedIn"] = true; 
-        $_SESSION["userArr"] = $user;
+    if(empty($user) || empty($password)){
+        return false;
     }
-    return true;
+    if($user === "Testuser" && $password === "testpw"){
+        return true;
+    }
+    if($user === "Admin" && $password === "admin"){
+        return true;
+    }
 }
 
 ?> 
