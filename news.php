@@ -32,7 +32,7 @@
         if($check != false) {
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                 $thumbnail_path = "news/thumbnails/" . basename($_FILES["fileToUpload"]["name"]);
-                $thumbnail_size = 150;
+                $thumbnail_size = 250;
                 list($width, $height) = getimagesize($target_file);
                 $thumb_width = $thumbnail_size;
                 $thumb_height = intval($height * $thumbnail_size / $width);
@@ -80,7 +80,7 @@
         
     }
     ?>
-    <?php if(isset($_SESSION["userArr"]) === "Admin") :?>
+    <?php if(isset($_SESSION["userArr"])&&($_SESSION["userArr"]) == "Admin") :?>
     <form action="news.php" method="post" enctype="multipart/form-data">
         <h2>Beitrag erstellen</h2>
         <label for="title">Titel:</label>

@@ -28,7 +28,7 @@ if(isset($_POST["registration"]))
 else {
     
     if (!checkPasswordHealth($_POST["password"])) {
-        $pwCriteriaNotMet = "Das Passwort muss mindestens 8-stellig sein, Groß- und Kleinbuchstaben, sowie eine Zahl enthalten!";
+        $pwCriteriaNotMet = "Das Passwort muss mindestens 5-stellig sein, Groß- und Kleinbuchstaben, sowie eine Zahl enthalten!";
     }
     if (!checkPasswordEquality($_POST["password"],$_POST["password_confirmation"])) {
         $pwNotEqual = "Passwörter stimmen nicht überein!";
@@ -42,28 +42,28 @@ else {
     <div class="row justify-content-left">
         <?php if (!isset($_SESSION["registered"])) : ?>
             <form class="col-5" name="registration" method="POST" action="registration.php">
-                <h3>Registrierung</h3>
+                <h3>Register</h3>
                 <br>
 
                 <div class="col-4">
                     <div class="mb-2">
                         <select class="form-select border-secondary" class="form-control" aria-label="">
-                            <option selected disabled>Anrede</option>
-                            <option value="Frau">Frau</option>
-                            <option value="Herr">Herr</option>
-                            <option value="Divers">Divers</option>
+                            <option selected disabled>Salutation</option>
+                            <option value="Frau">Ms.</option>
+                            <option value="Herr">Mr.</option>
+                            <option value="Divers">Mx.</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-floating mb-2">
                     <input class="form-control border-primary" id="inputVorname" class="form-control" type="text" name="inputVorname" placeholder="" required="true" value="" />
-                    <label for="inputVorname">Vorname</label>
+                    <label for="inputVorname">Firstname</label>
 
                 </div>
 
                 <div class="form-floating mb-3">
                     <input class="form-control border-primary" id="inputNachname" class="form-control" type="text" name="inputNachname" placeholder="" required="true" value="" />
-                    <label for="inputNachname">Nachname</label>
+                    <label for="inputNachname">Lastname</label>
 
                 </div>
 
@@ -83,7 +83,7 @@ else {
                     <input class="form-control border-primary <?php if (!empty($pwCriteriaNotMet)) {
                                                                     echo "is-invalid";
                                                                 } ?>" id="password" class="form-control" type="password" name="password" placeholder="" required="true" />
-                    <label for="password">Passwort</label>
+                    <label for="password">Password</label>
                     <div class="invalid-feedback">
                         <?php if (!empty($pwCriteriaNotMet)) echo $pwCriteriaNotMet ; ?>
                     </div>
@@ -93,7 +93,7 @@ else {
                     <input class="form-control border-primary <?php if (!empty($pwNotEqual)) {
                                                                     echo "is-invalid";
                                                                 } ?>" id="password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="" required="true" />
-                    <label for="password_confirmation">Passwort erneut eingeben!</label>
+                    <label for="password_confirmation">Repeat Password!</label>
                     <div class="invalid-feedback">
                         <?php if (!empty($pwNotEqual)) echo $pwNotEqual ?>
 

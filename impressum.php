@@ -19,7 +19,7 @@ include 'nav.php';
     
     <br>
     <div class="container"> 
-      <h1>Impressum</h1>
+      <h1>Imprint</h1>
       <br>
     
     <h2>Hotel Technikum GmbH - Hotelbetrieb</h2>

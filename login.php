@@ -38,15 +38,15 @@ if(isset($_POST["login"])){
         <div class="row mb-3">
             <h1>Login</h1>
             <br>
-            <label class="form-label" for="loginUsername">Benutzername</label>
-            <input type="text" class="form-control border primary w-auto<?php if (!empty($userError)) {echo "is-invalid";}?>" id="loginUsername" name="loginUsername" placeholder="Benutzername" value=""/>
+            <label class="form-label" for="loginUsername">Username</label>
+            <input type="text" class="form-control border primary w-auto<?php if (!empty($userError)) {echo "is-invalid";}?>" id="loginUsername" name="loginUsername" placeholder="Username" value=""/>
             <div class="invalid-feedback">
                   <?php echo $userError; ?>
                 </div>
         </div>
         <div class="row mb-3">
-            <label class="form-label" for="exampleloginPassword1">Passwort</label>
-            <input type="password" class="form-control border primary w-auto <?php if (!empty($passwordError)) {echo "is-invalid";}?>" id="loginPassword" name="loginPassword" placeholder="Passwort"/>
+            <label class="form-label" for="exampleloginPassword1">Password</label>
+            <input type="password" class="form-control border primary w-auto <?php if (!empty($passwordError)) {echo "is-invalid";}?>" id="loginPassword" name="loginPassword" placeholder="Password"/>
             <div class="invalid-feedback">
                   <?php echo $passwordError; ?>
                 </div>

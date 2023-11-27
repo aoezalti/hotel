@@ -12,6 +12,7 @@ include 'nav.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     </script> 
   </head>
+  
   <body> 
 
   <div>
@@ -25,7 +26,7 @@ include 'nav.php';
         <div class="carousel-item active">
           <img src="./assets/luxurious-modern-bedroom-with-comfortable-bedding-elegance-generated-by-ai.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
-    <h4>Welcome to Hotel Technikum</h5>
+    <h4>Welcome to Hotel Technikum</h4>
     <p>Book now!</p>
   </div>
         </div>
