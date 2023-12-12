@@ -1,6 +1,7 @@
 <?php
 include 'nav.php';
 include 'errorHandling.php';
+include 'server.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
