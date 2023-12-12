@@ -16,7 +16,8 @@ include 'server.php';
 <?php
 if(isset($_POST["registration"]))
     if(checkPasswordHealth($_POST["password"]) && checkPasswordEquality($_POST["password"],$_POST["password_confirmation"])){
-    $vorname               = cleanUserInput(($_POST["inputVorname"]));
+        $salutation             = cleanUserInput(($_POST["salutation"]));
+        $vorname               = cleanUserInput(($_POST["inputVorname"]));
     $nachname              = cleanUserInput(($_POST["inputNachname"]));
     $user                  = cleanUserInput(($_POST["user"]));
     $email                 = cleanUserInput(($_POST["email"]));
@@ -48,7 +49,7 @@ else {
 
                 <div class="col-4">
                     <div class="mb-2">
-                        <select class="form-select border-secondary" class="form-control" aria-label="">
+                        <select name="salutation" class="form-select border-secondary" class="form-control" aria-label="">
                             <option selected disabled>Salutation</option>
                             <option value="Frau">Ms.</option>
                             <option value="Herr">Mr.</option>

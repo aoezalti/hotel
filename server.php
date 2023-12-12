@@ -17,10 +17,14 @@ if (isset($_POST['registration'])) {
     $password_2 = mysqli_real_escape_string($connection, $_POST['password_confirmation']);
     $firstname = mysqli_real_escape_string($connection, $_POST['inputVorname']);
     $lastname = mysqli_real_escape_string($connection, $_POST['inputNachname']);
+    $salutation = mysqli_real_escape_string($connection, $_POST['salutation']);
     $isAdmin = 0;
 
     if (empty($username)) {
         array_push($errors, "Username is required");
+    }
+    if (empty($salutation)) {
+        array_push($errors, "Salutation is required");
     }
     if (empty($mail)) {
         array_push($errors, "Email is required");
@@ -56,9 +60,9 @@ if (isset($_POST['registration'])) {
     if (count($errors) == 0) {
         $password = password_hash($password_1, PASSWORD_DEFAULT);
         // prepared statement
-        $sqlInsert = "INSERT INTO users(mail,firstname, lastname, password,isAdmin,username) VALUES (?,?,?,?,?,?)";
+        $sqlInsert = "INSERT INTO users(mail,firstname, lastname, password,isAdmin,username,salutation) VALUES (?,?,?,?,?,?,?)";
         $stmt = $connection->prepare($sqlInsert);
-        $stmt->bind_param("ssssis", $em, $firstn, $lastn, $passw, $isAd, $usern);
+        $stmt->bind_param("ssssiss", $em, $firstn, $lastn, $passw, $isAd, $usern, $salut);
 
         $em = $mail;
         $firstn = $firstname;
@@ -66,6 +70,7 @@ if (isset($_POST['registration'])) {
         $passw = $password;
         $isAd = $isAdmin;
         $usern = $username;
+        $salut = $salutation;
 
         if($stmt->execute()){
             echo "<h1>Success</h1>";
@@ -74,7 +79,6 @@ if (isset($_POST['registration'])) {
             echo "<h1>Failed to insert</h1>";
         }
         $_SESSION['username'] = $username;
-        $_SESSION['registered'] = "You are now registered!";
 
     }
 }
