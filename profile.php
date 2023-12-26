@@ -1,5 +1,6 @@
 <?php
 include 'nav.php';
+include 'server.php';
 ?>
 
 <!doctype html>

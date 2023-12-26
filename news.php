@@ -1,4 +1,6 @@
-<?php include 'nav.php';?>
+<?php include 'nav.php';
+      include 'server.php';
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -19,6 +21,7 @@
 <body>
 <div class=container justify-content-left>
     <h1>News-Beiträge</h1>
+
     <?php
     
  
@@ -43,6 +46,8 @@
                 imagedestroy($thumb_image);
                 imagedestroy($source_image);
                 echo "Beitrag erstellt.";
+                $_SESSION["filepath"] = $target_file;
+                $_SESSION["thumbnailpath"] = $thumbnail_path;
             } else {
                 echo "Es gab einen Fehler beim Hochladen des Bildes.";
             }
@@ -80,8 +85,8 @@
         
     }
     ?>
-    <?php if(isset($_SESSION["userArr"])&&($_SESSION["userArr"]) == "Admin") :?>
-    <form action="news.php" method="post" enctype="multipart/form-data">
+    <?php if(isset($_SESSION["userArr"])&& $_SESSION["isAdmin"]) :?>
+    <form action="news.php" name = "newsEntry" method="post" enctype="multipart/form-data">
         <h2>Beitrag erstellen</h2>
         <label for="title">Titel:</label>
         <input type="text" name="title" id="title" required><br>

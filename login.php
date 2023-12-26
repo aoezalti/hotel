@@ -19,8 +19,7 @@ if(isset($_POST["login"])){
     if (checkLogin($_POST["loginUsername"], $_POST["loginPassword"])){
         $user                  = cleanUserInput($_POST["loginUsername"]);
         $password              = cleanUserInput($_POST["loginPassword"]);
-        $_SESSION["userArr"] = $user;
-        $_SESSION["loggedIn"] = true;
+       
       }
       else {
         if (empty($_POST["loginUsername"])) {

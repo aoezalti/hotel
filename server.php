@@ -1,3 +1,5 @@
+<?php if (session_status() == PHP_SESSION_NONE) {
+    session_start();} ?>
 <?php
 include 'errorHandling.php';
 
@@ -114,7 +116,9 @@ echo "</ol>";
         echo "<h1>correct</h1>";
         $_SESSION["userArr"] = $username;
         $_SESSION["loggedIn"] = true;
-    }
+        $_SESSION["isAdmin"] = $isAdmin;
+        }
+    
     if(!password_verify($password1,$password2)){
         echo "<h1>not correct</h1>";
         echo $password2;
@@ -122,7 +126,29 @@ echo "</ol>";
         echo $firstname;
         echo $password1;
     }
+    
 }
 
 
+
+if(isset($_POST["newsEntry"])){
+    $title = cleanUserInput($_POST["title"]) ;
+    $articleText  = cleanUserInput($_POST["text"]);
+    $filepath = $_SESSION["filepath"];
+    $author = $_SESSION["userArr"]; 
+    $thumbnailpath = $_SESSION["thumbnailpath"];
+
+    $sqlInsert = "INSERT INTO news(imageURL ,articleText , 	author, thumbnailPath ,title ) VALUES (?,?,?,?,?)";
+    $stmt = $connection->prepare($sqlInsert);
+    $stmt->bind_param("ssssss", $filepath, $articleText, $author, $thumbnailpath, $title);
+        
+    if($stmt->execute()){
+        echo "<h1>Success</h1>";
+    }
+    else {
+        echo "<h1>Failed to insert</h1>";
+    }
+
+
+}
     ?>
