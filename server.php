@@ -1,0 +1,128 @@
+<?php
+include 'errorHandling.php';
+
+// initializing variables
+$username = "";
+$email    = "";
+$errors = array();
+
+require_once("./dbaccess.php");
+
+$connection = new mysqli($dbHost,$dbUsername,$dbPassword,$dbName);
+
+if (isset($_POST['registration'])) {
+    // receive all input values from the form
+    $username = cleanUserInput($_POST['user']);
+    $mail = cleanUserInput($_POST['email']);
+    $password_1 = cleanUserInput($_POST['password']);
+    $password_2 = cleanUserInput($_POST['password_confirmation']);
+    $firstname = cleanUserInput($_POST['inputVorname']);
+    $lastname = cleanUserInput($_POST['inputNachname']);
+    $salutation = cleanUserInput($_POST['salutation']);
+    $isAdmin = 0;
+
+    if (empty($username)) {
+        array_push($errors, "Username is required");
+    }
+    if (empty($salutation)) {
+        array_push($errors, "Salutation is required");
+    }
+    if (empty($mail)) {
+        array_push($errors, "Email is required");
+    }
+    if (empty($firstname)) {
+        array_push($errors, "First name is required");
+    }
+    if (empty($lastname)) {
+        array_push($errors, "Last name is required");
+    }
+    if (empty($password_1)) {
+        array_push($errors, "Password is required");
+    }
+    if ($password_1 != $password_2) {
+        array_push($errors, "The two passwords do not match");
+    }
+
+    $user_check_query = "SELECT * FROM users WHERE username='$username' OR mail='$mail' LIMIT 1";
+    $result = mysqli_query($connection, $user_check_query);
+    $user = mysqli_fetch_assoc($result);
+
+    if ($user) {
+        if ($user['username'] === $username) {
+            array_push($errors, "Username already exists");
+        }
+
+        if ($user['mail'] === $mail) {
+            array_push($errors, "Email already exists");
+        }
+    }
+
+
+    if (count($errors) == 0) {
+        $password = password_hash($password_1, PASSWORD_DEFAULT);
+        // prepared statement
+        $sqlInsert = "INSERT INTO users(mail,firstname, lastname, password,isAdmin,username, salutation) VALUES (?,?,?,?,?,?,?)";
+        $stmt = $connection->prepare($sqlInsert);
+        
+        $em = $mail;
+        $firstn = $firstname;
+        $lastn = $lastname;
+        $passw = $password;
+        $isAd = $isAdmin;
+        $usern = $username;
+        $salut = $salutation;
+        $stmt->bind_param("ssssiss", $em, $firstn, $lastn, $passw, $isAd, $usern, $salut);
+        
+        if($stmt->execute()){
+            echo "<h1>Success</h1>";
+        }
+        else {
+            echo "<h1>Failed to insert</h1>";
+        }
+        $_SESSION['username'] = $username;
+
+    }
+}
+
+if(isset($_POST["login"])){
+    // receive all input values from the form
+    $user = cleanUserInput($_POST["loginUsername"]);
+    $password1 = cleanUserInput($_POST["loginPassword"]);
+
+    $select = "SELECT * FROM users WHERE username=?";
+    $prepStmt = $connection->prepare($select);
+
+    $uname = $user; // Define $uname before binding it
+    $prepStmt->bind_param("s",$uname);
+
+    $prepStmt->execute();
+    $prepStmt->bind_result($id, $mail, $firstname, $lastname, $password2, $isAdmin, $isActive, $username, $salutation);
+    
+    var_dump($prepStmt);
+
+    echo "<ol>";
+while($prepStmt->fetch()){
+    echo "<ul>";
+    echo "<li>" . $id . "</li>";
+    echo "<li>" . $username . "</li>";
+    echo "<li>" . $mail . "</li>";
+    echo "<li>" . $password2 . "</li>";
+    echo "</ul>";
+}
+echo "</ol>";
+    if(password_verify($password1,$password2)){
+        echo "<h1>correct</h1>";
+        $_SESSION["userArr"] = $username;
+        $_SESSION["loggedIn"] = true;
+    }
+    if(!password_verify($password1,$password2)){
+        echo "<h1>not correct</h1>";
+        echo $password2;
+        echo $user;
+        echo $firstname;
+        echo $password1;
+    }
+}
+
+
+    ?>

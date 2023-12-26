@@ -1,5 +1,6 @@
 <?php 
 include 'nav.php';
+include 'server.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +14,7 @@ include 'nav.php';
     </script> 
   </head>
 <div class="main-div">
-<?php include 'errorHandling.php';
+<?php 
 if(isset($_POST["login"])){
     if (checkLogin($_POST["loginUsername"], $_POST["loginPassword"])){
         $user                  = cleanUserInput($_POST["loginUsername"]);

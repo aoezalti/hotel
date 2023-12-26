@@ -1,6 +1,6 @@
 <?php
 include 'nav.php';
-include 'errorHandling.php';
+include 'server.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +15,7 @@ include 'errorHandling.php';
 <?php
 if(isset($_POST["registration"]))
     if(checkPasswordHealth($_POST["password"]) && checkPasswordEquality($_POST["password"],$_POST["password_confirmation"])){
+    $salutation            = cleanUserInput(($_POST["salutation"]));
     $vorname               = cleanUserInput(($_POST["inputVorname"]));
     $nachname              = cleanUserInput(($_POST["inputNachname"]));
     $user                  = cleanUserInput(($_POST["user"]));
@@ -28,7 +29,7 @@ if(isset($_POST["registration"]))
 else {
     
     if (!checkPasswordHealth($_POST["password"])) {
-        $pwCriteriaNotMet = "Das Passwort muss mindestens 8-stellig sein, Groß- und Kleinbuchstaben, sowie eine Zahl enthalten!";
+        $pwCriteriaNotMet = "Das Passwort muss mindestens 5-stellig sein, Groß- und Kleinbuchstaben, sowie eine Zahl enthalten!";
     }
     if (!checkPasswordEquality($_POST["password"],$_POST["password_confirmation"])) {
         $pwNotEqual = "Passwörter stimmen nicht überein!";
@@ -47,11 +48,11 @@ else {
 
                 <div class="col-4">
                     <div class="mb-2">
-                        <select class="form-select border-secondary" class="form-control" aria-label="">
+                        <select name="salutation" class="form-select border-secondary" class="form-control" aria-label="">
                             <option selected disabled>Salutation</option>
-                            <option value="Frau">Ms.</option>
-                            <option value="Herr">Mr.</option>
-                            <option value="Divers">Mx.</option>
+                            <option value="Ms.">Ms.</option>
+                            <option value="Mr.">Mr.</option>
+                            <option value="Mx.">Mx.</option>
                         </select>
                     </div>
                 </div>

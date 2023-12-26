@@ -68,9 +68,9 @@ header("Location: profile.php");
         <div class="mb-2">
           <select class="form-select border-secondary" class="form-control" aria-label="" name="anrede">
             <option selected disabled>Salutation</option>
-            <option value="Frau">Ms.</option>
-            <option value="Herr">Mr.</option>
-            <option value="Divers">Mx.</option>
+            <option value="Ms.">Ms.</option>
+            <option value="Mr.">Mr.</option>
+            <option value="Mx.">Mx.</option>
           </select>
         </div>
       </div>
