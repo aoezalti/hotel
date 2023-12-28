@@ -85,7 +85,7 @@
         
     }
     ?>
-    <?php if(isset($_SESSION["userArr"])&& $_SESSION["isAdmin"]) :?>
+    <?php if(isset($_SESSION["userArr"])&& isset($_SESSION["isAdmin"])) :?>
     <form action="news.php" name = "newsEntry" method="post" enctype="multipart/form-data">
         <h2>Beitrag erstellen</h2>
         <label for="title">Titel:</label>

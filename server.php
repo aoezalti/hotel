@@ -41,13 +41,23 @@ if (isset($_POST['registration'])) {
     if (empty($password_1)) {
         array_push($errors, "Password is required");
     }
+    if (!checkPasswordHealth($password_1,$password_2)) {
+        array_push($errors, "Password doesn't match password criteria (atleast 5 chars,
+        lower + uppercase, atleast one number)");
+    }
     if ($password_1 != $password_2) {
         array_push($errors, "The two passwords do not match");
     }
 
-    $user_check_query = "SELECT * FROM users WHERE username='$username' OR mail='$mail' LIMIT 1";
-    $result = mysqli_query($connection, $user_check_query);
-    $user = mysqli_fetch_assoc($result);
+    $user_check = "SELECT * FROM users WHERE username=? OR mail=? LIMIT 1";
+    $prepStmt = $connection->prepare($user_check);
+
+    $user = $username; // Define $uname before binding it
+    $email = $mail;
+    $prepStmt->bind_param("ss",$uname,$email);
+    $prepStmt->execute();
+    $result = $prepStmt->get_result(); // get the mysqli result
+    $user = $result->fetch_assoc(); // fetch data
 
     if ($user) {
         if ($user['username'] === $username) {
@@ -83,6 +93,11 @@ if (isset($_POST['registration'])) {
         }
         $_SESSION['username'] = $username;
 
+    }
+    else {
+        foreach ($errors as $error) {
+            echo "$error <br>";
+        }
     }
 }
 
