@@ -92,6 +92,10 @@ if (isset($_POST['registration'])) {
             echo "<h1>Failed to insert</h1>";
         }
         $_SESSION['username'] = $username;
+        $_SESSION["userArr"] = $user;
+        $_SESSION["loggedIn"] = true;
+        $_SESSION["registered"] = true;
+        $_SESSION["isAdmin"] = $isAdmin;
 
     }
     else {
@@ -115,7 +119,7 @@ if(isset($_POST["login"])){
     $prepStmt->execute();
     $prepStmt->bind_result($id, $mail, $firstname, $lastname, $password2, $isAdmin, $isActive, $username, $salutation);
     
-    var_dump($prepStmt);
+    //var_dump($prepStmt);
 
     echo "<ol>";
 while($prepStmt->fetch()){
@@ -134,13 +138,13 @@ echo "</ol>";
         $_SESSION["isAdmin"] = $isAdmin;
         }
     
-    if(!password_verify($password1,$password2)){
+    /*if(!password_verify($password1,$password2)){
         echo "<h1>not correct</h1>";
         echo $password2;
         echo $user;
         echo $firstname;
         echo $password1;
-    }
+    }*/
     
 }
 
@@ -155,7 +159,7 @@ if(isset($_POST["newsEntry"])){
 
     $sqlInsert = "INSERT INTO news(imageURL ,articleText , 	author, thumbnailPath ,title ) VALUES (?,?,?,?,?)";
     $stmt = $connection->prepare($sqlInsert);
-    $stmt->bind_param("ssssss", $filepath, $articleText, $author, $thumbnailpath, $title);
+    $stmt->bind_param("sssss", $filepath, $articleText, $author, $thumbnailpath, $title);
         
     if($stmt->execute()){
         echo "<h1>Success</h1>";

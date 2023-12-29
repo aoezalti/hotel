@@ -27,7 +27,7 @@
  
 
     // File-Upload
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if(isset($_POST["newsEntry"])){
         $target_dir = "news/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
         
@@ -71,9 +71,9 @@
         ),
         array(
             "title" => (!empty($_POST["title"])) ? $_POST["title"] : "",
-            "date" => (!empty($_POST["title"])) ? date('Y-m-d') : "",
-            "image" => (!empty($_POST["title"])) ? $thumbnail_path : "",
-            "text" => (!empty($_POST["title"])) ? $_POST["text"] : ""
+            "date" => (!empty($_POST["date"])) ? date('Y-m-d') : "",
+            "image" => (!empty($_POST["image"])) ? $thumbnail_path : "",
+            "text" => (!empty($_POST["text"])) ? $_POST["text"] : ""
         )
     );
     foreach ($posts as $post) {
@@ -94,7 +94,7 @@
         <label for="text">Text:</label>
         <textarea name="text" id="text" required></textarea><br>
         <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Hochladen" name="submit">
+        <input type="submit" value="newsEntry" name="newsEntry">
     </form>
     <?php endif?>
     </div>
