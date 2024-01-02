@@ -151,11 +151,37 @@ echo "</ol>";
 
 
 if(isset($_POST["newsEntry"])){
+    $target_dir = "news/";
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        
+        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        if($check != false) {
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                $thumbnail_path = "news/thumbnails/" . basename($_FILES["fileToUpload"]["name"]);
+                $thumbnail_size = 250;
+                list($width, $height) = getimagesize($target_file);
+                $thumb_width = $thumbnail_size;
+                $thumb_height = intval($height * $thumbnail_size / $width);
+                $thumb_image = imagecreatetruecolor($thumb_width, $thumb_height);
+                $source_image = imagecreatefromjpeg($target_file);
+                imagecopyresized($thumb_image, $source_image, 0, 0, 0, 0, $thumb_width, $thumb_height, $width, $height);
+                imagejpeg($thumb_image, $thumbnail_path);
+                imagedestroy($thumb_image);
+                imagedestroy($source_image);
+                
+                echo "Beitrag erstellt.";
+            } else {
+                echo "Es gab einen Fehler beim Hochladen des Bildes.";
+            }
+        } else {
+            echo "Die Datei ist kein Bild.";
+        }
+    
     $title = cleanUserInput($_POST["title"]) ;
     $articleText  = cleanUserInput($_POST["text"]);
-    $filepath = $_SESSION["filepath"];
+    $filepath = $target_file;
     $author = $_SESSION["userArr"]; 
-    $thumbnailpath = $_SESSION["thumbnailpath"];
+    $thumbnailpath = $thumbnail_path;
 
     $sqlInsert = "INSERT INTO news(imageURL ,articleText , 	author, thumbnailPath ,title ) VALUES (?,?,?,?,?)";
     $stmt = $connection->prepare($sqlInsert);
@@ -168,6 +194,33 @@ if(isset($_POST["newsEntry"])){
         echo "<h1>Failed to insert</h1>";
     }
 
+
+}
+
+function fetchNews($dbHost,$dbUsername,$dbPassword,$dbName){
+    
+    $connection = new mysqli($dbHost,$dbUsername,$dbPassword,$dbName);
+    $newsArray = array();
+
+    $select = "SELECT * FROM news";
+
+    $prepStmt = $connection->prepare($select);
+    $prepStmt -> execute();
+    $prepStmt -> bind_result($id, $filepath, $articleText,$publishingDate, $author, $thumbnailpath, $title);
+
+    echo "<ol>";
+    while($prepStmt->fetch()){
+        echo "<ul>";
+            echo "<h3> Title:" . $title . "</h3>";
+            
+            //echo "<li>" . $filepath . "</li>";
+            echo "<p> Text: " . $articleText . "</p>";
+            echo "<p>Published on: " . $publishingDate . "</p>";
+            echo "<p>Published by: " . $author . "</p>";
+            echo "<img src=\"" . $thumbnailpath .  "\" alt=\"\">";
+        echo "</ul>";
+        echo "<br>";
+    }
 
 }
     ?>
