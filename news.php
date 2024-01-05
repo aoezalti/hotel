@@ -26,8 +26,12 @@ include 'server.php';
     <?php
     fetchNews($dbHost,$dbUsername,$dbPassword,$dbName);
     ?>
+
     <?php if(isset($_SESSION["userArr"])&& isset($_SESSION["isAdmin"])) :?>
     <form action="news.php" name = "newsEntry" method="POST" enctype="multipart/form-data">
+=======
+    <?php if(isset($_SESSION["userArr"])&&($_SESSION["userArr"]) == "Admin") :?>
+    <form action="news.php" method="post" enctype="multipart/form-data">
         <h2>Beitrag erstellen</h2>
         <label for="title">Titel:</label>
         <input type="text" name="title" id="title" required><br>
