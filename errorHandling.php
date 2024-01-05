@@ -48,6 +48,7 @@ function checkLogin($user,$password){
     if(empty($user) || empty($password)){
         return false;
     }
+
     if($user === "Testuser" && $password === "testpw"){
         $_SESSION["anrede"] ="Mx.";
         $_SESSION["vorname"] = "Test";

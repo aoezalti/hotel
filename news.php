@@ -1,4 +1,7 @@
-<?php include 'nav.php';?>
+<?php 
+include 'nav.php';
+include 'server.php';
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -19,67 +22,14 @@
 <body>
 <div class=container justify-content-left>
     <h1>News-Beiträge</h1>
-    <?php
-    
- 
 
-    // File-Upload
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $target_dir = "news/";
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-        
-        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-        if($check != false) {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                $thumbnail_path = "news/thumbnails/" . basename($_FILES["fileToUpload"]["name"]);
-                $thumbnail_size = 250;
-                list($width, $height) = getimagesize($target_file);
-                $thumb_width = $thumbnail_size;
-                $thumb_height = intval($height * $thumbnail_size / $width);
-                $thumb_image = imagecreatetruecolor($thumb_width, $thumb_height);
-                $source_image = imagecreatefromjpeg($target_file);
-                imagecopyresized($thumb_image, $source_image, 0, 0, 0, 0, $thumb_width, $thumb_height, $width, $height);
-                imagejpeg($thumb_image, $thumbnail_path);
-                imagedestroy($thumb_image);
-                imagedestroy($source_image);
-                echo "Beitrag erstellt.";
-            } else {
-                echo "Es gab einen Fehler beim Hochladen des Bildes.";
-            }
-        } else {
-            echo "Die Datei ist kein Bild.";
-        }
-    }
-       // Beitragsanzeige
-       $posts = array(
-        array(
-            "title" => "Erster Beitrag",
-            "date" => "19. November 2023",
-            "image" => "news/thumbnails/image1.jpg",
-            "text" => "Dies ist der erste Beitrag."
-        ),
-        array(
-            "title" => "Zweiter Beitrag",
-            "date" => "18. November 2023",
-            "image" => "news/thumbnails/image1.jpg",
-            "text" => "Dies ist der zweite Beitrag."
-        ),
-        array(
-            "title" => (!empty($_POST["title"])) ? $_POST["title"] : "",
-            "date" => (!empty($_POST["title"])) ? date('Y-m-d') : "",
-            "image" => (!empty($_POST["title"])) ? $thumbnail_path : "",
-            "text" => (!empty($_POST["title"])) ? $_POST["text"] : ""
-        )
-    );
-    foreach ($posts as $post) {
-      
-        echo "<div><h2>" . $post["title"] . "</h2>";
-        echo "<p>" . $post["date"] . "</p>";
-        echo "<img src=\"" . $post["image"] . "\" alt=\"\">";
-        echo "<p>" . $post["text"] . "</p></div>";
-        
-    }
+    <?php
+    fetchNews($dbHost,$dbUsername,$dbPassword,$dbName);
     ?>
+
+    <?php if(isset($_SESSION["userArr"])&& isset($_SESSION["isAdmin"])) :?>
+    <form action="news.php" name = "newsEntry" method="POST" enctype="multipart/form-data">
+=======
     <?php if(isset($_SESSION["userArr"])&&($_SESSION["userArr"]) == "Admin") :?>
     <form action="news.php" method="post" enctype="multipart/form-data">
         <h2>Beitrag erstellen</h2>
@@ -89,7 +39,7 @@
         <label for="text">Text:</label>
         <textarea name="text" id="text" required></textarea><br>
         <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Hochladen" name="submit">
+        <input type="submit" value="newsEntry" name="newsEntry">
     </form>
     <?php endif?>
     </div>
