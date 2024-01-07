@@ -138,13 +138,13 @@ echo "</ol>";
         $_SESSION["isAdmin"] = $isAdmin;
         }
     
-    /*if(!password_verify($password1,$password2)){
+    if(!password_verify($password1,$password2)){
         echo "<h1>not correct</h1>";
         echo $password2;
         echo $user;
         echo $firstname;
         echo $password1;
-    }*/
+    }
     
 }
 
