@@ -1,14 +1,14 @@
 <?php
 
 function cleanUserInput($input)
-            {
-            
-                $input = trim($input);
-                $input = stripslashes($input);
-                $input = htmlspecialchars($input);
-            
-                return $input;
-            }
+{
+
+    $input = trim($input);
+    $input = stripslashes($input);
+    $input = htmlspecialchars($input);
+
+    return $input;
+}
 //check user input
 function checkRegistration(
     $password,
@@ -20,7 +20,7 @@ function checkRegistration(
     $pwHealth = checkPasswordHealth($password);
     return array(
 
-       isset($passwordNotEqual),
+        isset($passwordNotEqual),
         $pwHealth
     );
 }
@@ -36,18 +36,18 @@ function checkPasswordHealth($password)
     return true;
 }
 
-function checkPasswordEquality($password, $password_confirmation){
-    if($password == $password_confirmation) {
+function checkPasswordEquality($password, $password_confirmation)
+{
+    if ($password == $password_confirmation) {
         return true;
     }
     return false;
 }
 
 
-function checkLogin($user,$password){
-    if(empty($user) || empty($password)){
+function checkLogin($user, $password)
+{
+    if (empty($user) || empty($password)) {
         return false;
     }
 }
-
-?> 

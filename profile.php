@@ -5,33 +5,7 @@ include 'server.php';
 
 <!doctype html>
 <html lang="en">
-<?php
 
-if (isset($_POST["update"]) && $_SESSION["userArr"]=="Testuser") {
-  
-header("Location: profile.php"); 
-
-
-  if (strlen($_POST["vorname"]) > 0) {
-    $_SESSION["vorname"] = htmlspecialchars($_POST["vorname"]);
-  }
-
-  if (strlen($_POST["nachname"]) > 0) {
-    $_SESSION["nachname"] = htmlspecialchars($_POST["nachname"]);
-  }
-
-  if (strlen($_POST["mail"]) > 0) {
-    $_SESSION["mail"] = htmlspecialchars($_POST["mail"]);
-  }
-
-  if (strlen($_POST["user"]) > 0) {
-    $_SESSION["userArr"] = htmlspecialchars($_POST["user"]);
-  }
-  if (isset($_POST["anrede"]) > 0) {
-    $_SESSION["anrede"] = htmlspecialchars($_POST["anrede"]);
-  }
-}
-?>
 
 
 
@@ -47,17 +21,17 @@ header("Location: profile.php");
     <?php
     echo "<h1> Welcome " . $_SESSION["userArr"] . "</h1>";
     ?>
-    <?php if($_SESSION["userArr"] !="Admin") : ;?> 
-    <h3> Profile overview </h3>
+    <?php if ($_SESSION["userArr"] != "Admin") :; ?>
+      <h3> Profile overview </h3>
 
-    <?php
-    if($_SESSION["userArr"]== "Testuser"){
-    echo "<h4> User: " . $_SESSION["userArr"] . "</h4>";
-    echo "<h4> Salutation: " . $_SESSION["anrede"] . "</h4>";
-    echo "<h4> Firstname: " . $_SESSION["vorname"] . "</h4>";
-    echo "<h4> Lastname: " . $_SESSION["nachname"] . "</h4>";
-    echo "<h4> Mail: " . $_SESSION["mail"] . "</h4>";}
-    ?>
+      <?php
+      fetchUser($_SESSION["userArr"], $dbHost, $dbUsername, $dbPassword, $dbName);
+      echo "<h4> User: " . $_SESSION["userArr"] . "</h4>";
+      echo "<h4> Salutation: " . $_SESSION["anrede"] . "</h4>";
+      echo "<h4> Firstname: " . $_SESSION["vorname"] . "</h4>";
+      echo "<h4> Lastname: " . $_SESSION["nachname"] . "</h4>";
+      echo "<h4> Mail: " . $_SESSION["mail"] . "</h4>";
+      ?>
   </div>
   <br><br><br>
   <div class="container">
@@ -98,6 +72,17 @@ header("Location: profile.php");
         <label for="email">E-Mail</label>
 
       </div>
+
+      <div class="form-floating mb-3">
+        <input class="form-control border-primary" id=" pwnew" class="form-control" type="password" name="passwordNew" placeholder="" value="" />
+        <label for="pwnew">New Password</label>
+
+      </div>
+      <div class="form-floating mb-3">
+        <input class="form-control border-primary" id=" pwold" class="form-control" type="password" name="passwordOld" placeholder="" value="" />
+        <label for="pwold">Old Password</label>
+
+      </div>
       <div class="row">
         <div class="col">
           <input class="btn btn-outline-danger" type="reset" value="Reset">
@@ -111,7 +96,8 @@ header("Location: profile.php");
   </div>
 
 </body>
-<?php elseif($_SESSION["userArr"] === "Admin") :  ?>
+<?php elseif ($_SESSION["userArr"] === "Admin") :  ?>
   <h4>Currently registered Users: 1</h4>
 <?php endif ?>
+
 </html>
