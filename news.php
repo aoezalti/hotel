@@ -28,9 +28,8 @@ include 'server.php';
     ?>
 
    
-<?php if(isset($_SESSION["userArr"])&&($_SESSION["userArr"]) == "Admin") :?>
+<?php if(isset($_SESSION["userArr"])&&($_SESSION["isAdmin"]) == 1) :?>
     <form action="news.php" name = "newsEntry" method="POST" enctype="multipart/form-data">
-=======
     <form action="news.php" method="post" enctype="multipart/form-data">
         <h2>Beitrag erstellen</h2>
         <label for="title">Titel:</label>

@@ -23,7 +23,7 @@ if (isset($_POST['registration'])) {
     $lastname = cleanUserInput($_POST['inputNachname']);
     $salutation = cleanUserInput($_POST['salutation']);
     $isAdmin = 0;
-
+    $isActive = 1;
     if (empty($username)) {
         array_push($errors, "Username is required");
     }
@@ -96,6 +96,7 @@ if (isset($_POST['registration'])) {
         $_SESSION["loggedIn"] = true;
         $_SESSION["registered"] = true;
         $_SESSION["isAdmin"] = $isAdmin;
+        $_SESSION["isActive"] = $isActive;
     } else {
         foreach ($errors as $error) {
             echo "$error <br>";
@@ -305,5 +306,21 @@ function fetchUser($username, $dbHost, $dbUsername, $dbPassword, $dbName)
     $_SESSION["nachname"] = $lastname;
     $_SESSION["mail"] = $mail;
     $_SESSION["isActive"] = $isActive;
+}
+function fetchAllUsers($dbHost, $dbUsername, $dbPassword, $dbName){
+    $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+    $select = "SELECT * FROM users";
+    $prepStmt = $connection->prepare($select);
+    $prepStmt->execute();
+    $result = $prepStmt->get_result();
+    return $result;
+}
+
+function getUserCount($dbHost, $dbUsername, $dbPassword, $dbName){
+    $result =fetchAllUsers($dbHost,$dbUsername,$dbPassword,$dbName);
+
+    $count = mysqli_num_rows($result);
+    return $count;
 }
 ?>

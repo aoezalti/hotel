@@ -21,7 +21,7 @@ include 'server.php';
     <?php
     echo "<h1> Welcome " . $_SESSION["userArr"] . "</h1>";
     ?>
-    <?php if ($_SESSION["userArr"] != "Admin") :; ?>
+    <?php if ($_SESSION["isAdmin"] === 0) :; ?>
       <h3> Profile overview </h3>
 
       <?php
@@ -96,8 +96,13 @@ include 'server.php';
   </div>
 
 </body>
-<?php elseif ($_SESSION["userArr"] === "Admin") :  ?>
-  <h4>Currently registered Users: 1</h4>
-<?php endif ?>
+<div>
+<?php elseif ($_SESSION["isAdmin"] === 1) :; ?>
+  <?php echo " <h4>Currently registered Users: " . getUserCount($dbHost, $dbUsername, $dbPassword, $dbName) ?>
 
+<?php endif ?>
+</div>
+<div class="container">
+    <a href="./userManagement.php" class="btn btn-primary" role="button">Manage users</a>
+</div>
 </html>
