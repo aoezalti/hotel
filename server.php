@@ -6,7 +6,7 @@ include 'errorHandling.php';
 
 // initializing variables
 $username = "";
-$email    = "";
+$email = "";
 $errors = array();
 
 require_once("./dbaccess.php");
@@ -70,7 +70,6 @@ if (isset($_POST['registration'])) {
         }
     }
 
-
     if (count($errors) == 0) {
         $password = password_hash($password_1, PASSWORD_DEFAULT);
         // prepared statement
@@ -120,7 +119,6 @@ if (isset($_POST["login"])) {
 
     //var_dump($prepStmt); statement below needed?
 
-
     $prepStmt->fetch();
     if (password_verify($password1, $password2) && $isActive === 1) {
         echo "<h1>correct</h1>";
@@ -166,7 +164,7 @@ if (isset($_POST["newsEntry"])) {
     }
 
     $title = cleanUserInput($_POST["title"]);
-    $articleText  = cleanUserInput($_POST["text"]);
+    $articleText = cleanUserInput($_POST["text"]);
     $filepath = $target_file;
     $author = $_SESSION["userArr"];
     $thumbnailpath = $thumbnail_path;
@@ -203,84 +201,105 @@ function fetchNews($dbHost, $dbUsername, $dbPassword, $dbName)
         echo "<p> Text: " . $articleText . "</p>";
         echo "<p>Published on: " . $publishingDate . "</p>";
         echo "<p>Published by: " . $author . "</p>";
-        echo "<img src=\"" . $thumbnailpath .  "\" alt=\"\">";
+        echo "<img src=\"" . $thumbnailpath . "\" alt=\"\">";
         echo "</ul>";
         echo "<br>";
     }
 }
+
 //funktioniert, profildaten müssen allerdings noch neu ausgelesen werden.
-if (isset($_POST["update"])) {
+if (isset($_POST["update"]) || isset($_POST["adminUpdate"])) {
+    $update = "UPDATE users SET ";
+    foreach ($_POST as $key => $value) {
+        if (isset($_POST[$key]) && !empty($_POST[$key]) && $key != "adminUpdate" && $key != "update") {
+            // Input field is set, store the key in the $setFields array
+            $setFields[] = $key;
+            $values[] = $value;
+            echo "Field $key is set with value $value.<br>";
+        } else {
+            // Input field is not set, store the key in the $unsetFields array
+            $unsetFields[] = $key;
+            echo "Field $key is not set.<br>";
+        }
+    }
+    $sqlFields = implode(',', $setFields);
+    echo $sqlFields;
 
-    if (!empty($_POST["anrede"])) {
-        $salutationUpdate = cleanUserInput($_POST["anrede"]);
-    } elseif (empty($_POST["anrede"])) {
-        $salutationUpdate = $_SESSION["anrede"];
-    }
-
-    if (!empty($_POST["vorname"])) {
-        $firstnameUpdate = cleanUserInput($_POST["vorname"]);
-    } elseif (empty($_POST["vorname"])) {
-        $firstnameUpdate = $_SESSION["vorname"];
-    }
-
-    if (!empty($_POST["nachname"])) {
-        $lastUpdate = cleanUserInput($_POST["vorname"]);
-    } elseif (empty($_POST["nachname"])) {
-        $lastUpdate = $_SESSION["nachname"];
-    }
-    if (!empty($_POST["user"])) {
-        $userUpdate = cleanUserInput($_POST["user"]);
-    } elseif (empty($_POST["user"])) {
-        $userUpdate = $_SESSION["userArr"];
-    }
-    if (!empty($_POST["mail"])) {
-        $mailUpdate = cleanUserInput($_POST["mail"]);
-    } elseif (empty($_POST["mail"])) {
-        $mailUpdate = $_SESSION["mail"];
-    }
 
     $select = "SELECT * FROM users WHERE username=?";
     $prepStmt = $connection->prepare($select);
 
-    $uname = $_SESSION["userArr"];
+    if (isset($_POST["update"])) {
+        $uname = $_SESSION["userArr"];
+    } else if (isset($_POST["adminUpdate"])) {
+        $uname = $_POST["username"];
+    }
     $prepStmt->bind_param("s", $uname);
 
     $prepStmt->execute();
     $prepStmt->bind_result($id, $mail, $firstname, $lastname, $password2, $isAdmin, $isActive, $username, $salutation);
 
     while ($prepStmt->fetch()) {
-            $passwordUpdate = $password2;
+        $passwordUpdate = $password2;
     }
     //PW change
     if (!empty($_POST["passwordNew"]) && checkPasswordHealth(cleanUserInput($_POST["passwordNew"]))) {
-        //neues PW muss Kriterien entsprechen
-
-
-
-        //altes PW als Bestätigung
-
-        //fetch old PW
-        
-        $passwordOld = cleanUserInput($_POST["passwordOld"]);
-        //verify
-        if (password_verify($passwordOld, $password2)) {
-            $passwordUpdate = password_hash(cleanUserInput($_POST["passwordNew"]), PASSWORD_DEFAULT);
-        } 
+        if (!isset($_POST["adminUpdate"])) {
+            $passwordOld = cleanUserInput($_POST["passwordOld"]);
+            //verify
+            if (password_verify($passwordOld, $password2)) {
+                $passwordUpdate = password_hash(cleanUserInput($_POST["passwordNew"]), PASSWORD_DEFAULT);
+            }
+        }
     }
 
-    $update = "UPDATE users SET mail=?, firstname=?, lastname=?,username=?,salutation=?,password=? WHERE username =? ";
-    $prepStmt = $connection->prepare($update);
-    $username = $_SESSION["userArr"];
-    $prepStmt->bind_param("sssssss", $mailUpdate, $firstnameUpdate, $lastUpdate, $userUpdate, $salutationUpdate, $passwordUpdate, $username);
-    $prepStmt->execute();
+    // Build the UPDATE query
+    $sql = "UPDATE users SET ";
 
-    echo "update done";
-    if(!checkPasswordHealth(cleanUserInput($_POST["passwordNew"]))){
-        echo "pw criteria not met";
+// Append each column with a new value
+    foreach ($setFields as $field) {
+        if($field != "adminUpdate" && $field != "update") {
+            $sql .= "$field = ?, ";
+        }
+    }
+
+// Remove the trailing comma and space
+    $sql = rtrim($sql, ", ");
+
+    $sql .= " WHERE username = ?";
+    echo "<br> UPDATE". $sql;
+// Prepare the statement
+    $stmt = $connection->prepare($sql);
+
+// Check if the statement preparation was successful
+    if ($stmt) {
+        // Dynamically bind parameters for each field
+        $types = '';
+       // $values = array();
+
+        foreach ($setFields as $value) {
+            // Determine the data type and add to $types
+            if (is_int($value)) {
+                $types .= 'i'; // Integer
+            } elseif (is_float($value)) {
+                $types .= 'd'; // Double
+            } else {
+                $types .= 's'; // String
+            }
+        }
+        //for username
+        $types .= 's';
+        echo "<br> Typesssss:". $types;
+
+        array_push($values, $username);
+        // Bind parameters dynamically
+        $stmt->bind_param($types, ...$values);
+
+        // Execute the statement
+        $result = $stmt->execute();
+
     }
 }
-
-
 
 function fetchUser($username, $dbHost, $dbUsername, $dbPassword, $dbName)
 {
@@ -307,7 +326,9 @@ function fetchUser($username, $dbHost, $dbUsername, $dbPassword, $dbName)
     $_SESSION["mail"] = $mail;
     $_SESSION["isActive"] = $isActive;
 }
-function fetchAllUsers($dbHost, $dbUsername, $dbPassword, $dbName){
+
+function fetchAllUsers($dbHost, $dbUsername, $dbPassword, $dbName)
+{
     $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
 
     $select = "SELECT * FROM users";
@@ -317,10 +338,12 @@ function fetchAllUsers($dbHost, $dbUsername, $dbPassword, $dbName){
     return $result;
 }
 
-function getUserCount($dbHost, $dbUsername, $dbPassword, $dbName){
-    $result =fetchAllUsers($dbHost,$dbUsername,$dbPassword,$dbName);
+function getUserCount($dbHost, $dbUsername, $dbPassword, $dbName)
+{
+    $result = fetchAllUsers($dbHost, $dbUsername, $dbPassword, $dbName);
 
     $count = mysqli_num_rows($result);
     return $count;
 }
+
 ?>
