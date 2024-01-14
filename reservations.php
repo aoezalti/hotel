@@ -17,11 +17,11 @@ function fetchRooms($dbHost, $dbUsername, $dbPassword, $dbName){
         return $result;
 
 }
-function getRoomIdByType($roomType){
+//TODO: function can't bind roomType because it's enum?
+function getRoomIdByType($roomType,$dbHost, $dbUsername, $dbPassword, $dbName ){
     $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
 
-    $select = "SELECT * FROM rooms WHERE roomType=?";
-
+    $select = "SELECT id FROM rooms WHERE roomType=?";
     $prepStmt = $connection->prepare($select);
     $prepStmt->bind_param("s", $roomType);
     $prepStmt->execute();
@@ -32,18 +32,35 @@ function getRoomIdByType($roomType){
     return $roomId;
 
 }
+
+function getRoomPriceById($roomId,$dbHost, $dbUsername, $dbPassword, $dbName )
+{
+    $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+    $select = "SELECT pricePerNight FROM rooms WHERE id=?";
+
+    $prepStmt = $connection->prepare($select);
+    $prepStmt->bind_param("i", $roomId);
+    $prepStmt->execute();
+    $prepStmt->bind_result($pricePerNight);
+
+    $pricePerNight= $prepStmt->fetch();
+    $connection->close();
+    return $pricePerNight;
+}
+
 // neue Zimmerreservierung anlegen
     if(isset($_POST["reservation"])) {
-        $userId = getId($_SESSION["userArr"]);
-
         $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
-        $roomId = getRoomIdByType($_POST["roomType"]);
-        $checkIn = $_POST["checkIn"];
-        $checkOut = $_POST["checkOut"];
+        $userId = getId($_SESSION["userArr"],$dbHost, $dbUsername, $dbPassword, $dbName);
+
+        $roomId = getRoomIdByType($_POST["roomType"],$dbHost, $dbUsername, $dbPassword, $dbName);
+        $checkIn = new DateTime($_POST["checkIn"]);
+        $checkOut = new DateTime($_POST["checkOut"]);
         $breakfast = isset($_POST["breakfast"]);
         $parking = isset($_POST["parking"]);
         $pets = isset($_POST["pets"]);
-        $totalPrice = getRoomPriceById($roomId) * ($checkIn->diff($checkOut)) -1;
+        $totalPrice = getRoomPriceById($roomId,$dbHost, $dbUsername, $dbPassword, $dbName) * (($checkIn)->diff(($checkOut))) -1;
 
 
         $sql = "INSERT INTO reservations (roomId, userId, checkIn, checkOut, breakfast, parking, pets, totalPrice) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
