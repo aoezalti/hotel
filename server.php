@@ -86,9 +86,8 @@ if (isset($_POST['registration'])) {
         $stmt->bind_param("ssssiss", $em, $firstn, $lastn, $passw, $isAd, $usern, $salut);
 
         if ($stmt->execute()) {
-            echo "<h1>Success</h1>";
         } else {
-            echo "<h1>Failed to insert</h1>";
+            echo "<h1>Failed to register</h1>";
         }
         $_SESSION['username'] = $username;
         $_SESSION["userArr"] = $user;
