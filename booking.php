@@ -17,21 +17,49 @@ include 'reservations.php';
     </script>
 </head>
 <body>
+
+<div class="container">
+<?php
+$result = fetchAllRooms($dbHost, $dbUsername, $dbPassword, $dbName);
+$count=0;
+while ($row = $result->fetch_assoc()) {
+    $count += 1;
+    //echo $row["roomType"] .'<br>';
+}
+echo '<h2>Available rooms: ' . $count . '</h2>';
+
+?>
+</div>
 <div class="container">
     <div class="row justify-content-left">
         
-            <form class="col-5" name="reservation" method="POST" action="reservations.php">
+            <form class="col-5" name="reservation" method="POST" action="booking.php">
                 <h3>New reservation</h3>
-                
+                <div class="mb-2">
+                    <select class="form-select border-secondary" class="form-control" aria-label="" name="roomType" required>
+                        <option selected disabled value="">Room Types</option>
+                        <?php
+                        $result = fetchAllRooms($dbHost, $dbUsername, $dbPassword, $dbName);
+                        while ($row = $result->fetch_assoc()) {
+                            $roomTypes[] = $row["roomType"];
+                        }
+
+                        foreach ($roomTypes as $roomType => $value) {
+                            $roomType = htmlspecialchars($roomType);
+                            echo '<option value="' . $value . '">' . $value . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
                 <div class="form-floating mb-2">
-                    <input class="form-control border-primary" type="date" name="start_date" id="start_date" required />
-                    <label for="start_date">Check-in</label>
+                    <input class="form-control border-primary" type="date" name="checkIn" id="checkIn" required />
+                    <label for="checkIn">Check-in</label>
 
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control border-primary" type="date" name="end_date" id="end_date" required />
-                    <label for="end_date">Check-out</label>
+                    <input class="form-control border-primary" type="date" name="checkOut" id="checkOut" required />
+                    <label for="checkOut">Check-out</label>
 
                 </div>
 
@@ -57,7 +85,7 @@ include 'reservations.php';
                 <div class="row">
                     <div class="col">
                         <input class="btn btn-outline-danger" type="reset" value="Reset">
-                        <input class="btn btn-outline-primary" type="submit" name="registration" value="Book">
+                        <input class="btn btn-outline-primary" type="submit" name="reservation" value="Book">
                     </div>
                 </div>
 

@@ -1,23 +1,73 @@
+<?php if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+} ?>
 <?php
-include
-'nav.php';
-?>
-<?php
+include 'server.php';
+require_once 'errorHandling.php';
+
+require_once("./dbaccess.php");
+function fetchRooms($dbHost, $dbUsername, $dbPassword, $dbName){
+        $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+        $select = "SELECT * FROM rooms";
+        $prepStmt = $connection->prepare($select);
+        $prepStmt->execute();
+        $result = $prepStmt->get_result();
+        $connection->close();
+        return $result;
+
+}
+function getRoomIdByType($roomType){
+    $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+    $select = "SELECT * FROM rooms WHERE roomType=?";
+
+    $prepStmt = $connection->prepare($select);
+    $prepStmt->bind_param("s", $roomType);
+    $prepStmt->execute();
+    $prepStmt->bind_result($roomId);
+
+    $roomId= $prepStmt->fetch();
+    $connection->close();
+    return $roomId;
+
+}
 // neue Zimmerreservierung anlegen
-function create_reservation($start_date, $end_date, $breakfast, $parking, $pets)
+    if(isset($_POST["reservation"])) {
+        $userId = getId($_SESSION["userArr"]);
+
+        $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+        $roomId = getRoomIdByType($_POST["roomType"]);
+        $checkIn = $_POST["checkIn"];
+        $checkOut = $_POST["checkOut"];
+        $breakfast = isset($_POST["breakfast"]);
+        $parking = isset($_POST["parking"]);
+        $pets = isset($_POST["pets"]);
+        $totalPrice = getRoomPriceById($roomId) * ($checkIn->diff($checkOut)) -1;
+
+
+        $sql = "INSERT INTO reservations (roomId, userId, checkIn, checkOut, breakfast, parking, pets, totalPrice) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = $connection->prepare($sql);
+
+        $stmt->bind_param('iissiiid', $roomId, $userId, $checkIn, $checkOut, $breakfast, $parking, $pets, $totalPrice);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Close the statement
+        $stmt->close();
+}
+
+function fetchAllRooms($dbHost, $dbUsername, $dbPassword, $dbName)
 {
-    if ($end_date <= $start_date) {
-        return "Error: End date must be greater than start date.";
-    }
-    $reservation = array(
-        "start_date" => $start_date,
-        "end_date" => $end_date,
-        "breakfast" => $breakfast,
-        "parking" => $parking,
-        "pets" => $pets,
-        "status" => "new"
-    );
-    return $reservation;
+    $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+    $select = "SELECT * FROM rooms";
+    $prepStmt = $connection->prepare($select);
+    $prepStmt->execute();
+    $result = $prepStmt->get_result();
+    return $result;
 }
 
 // eine Liste aller eigener Reservierungen einsehen
