@@ -207,98 +207,40 @@ function fetchNews($dbHost, $dbUsername, $dbPassword, $dbName)
     }
 }
 
-//funktioniert, profildaten müssen allerdings noch neu ausgelesen werden.
-if (isset($_POST["update"]) || isset($_POST["adminUpdate"])) {
-    $update = "UPDATE users SET ";
-    foreach ($_POST as $key => $value) {
-        if (isset($_POST[$key]) && !empty($_POST[$key]) && $key != "adminUpdate" && $key != "update") {
-            // Input field is set, store the key in the $setFields array
-            $setFields[] = $key;
-            $values[] = $value;
-            echo "Field $key is set with value $value.<br>";
-        } else {
-            // Input field is not set, store the key in the $unsetFields array
-            $unsetFields[] = $key;
-            echo "Field $key is not set.<br>";
-        }
+    function fetchUserById($id, $dbHost, $dbUsername, $dbPassword, $dbName)
+    {
+
+        $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+        $select = "SELECT * FROM users WHERE id=?";
+        $prepStmt = $connection->prepare($select);
+        $prepStmt->bind_param("i", $id);
+
+        $prepStmt->execute();
+        $prepStmt->bind_result($id, $mail, $firstname, $lastname, $password2, $isAdmin, $isActive, $username, $salutation);
+
+        //var_dump($prepStmt); statement below needed?
+
+
+        $user = $prepStmt->fetch();
+        return $user;
     }
-    $sqlFields = implode(',', $setFields);
-    echo $sqlFields;
 
+function getId($username, $dbHost, $dbUsername, $dbPassword, $dbName)
+{
 
-    $select = "SELECT * FROM users WHERE username=?";
+    $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+    $select = "SELECT id FROM users WHERE username=?";
     $prepStmt = $connection->prepare($select);
-
-    if (isset($_POST["update"])) {
-        $uname = $_SESSION["userArr"];
-    } else if (isset($_POST["adminUpdate"])) {
-        $uname = $_POST["username"];
-    }
-    $prepStmt->bind_param("s", $uname);
+    $prepStmt->bind_param("s", $username);
 
     $prepStmt->execute();
-    $prepStmt->bind_result($id, $mail, $firstname, $lastname, $password2, $isAdmin, $isActive, $username, $salutation);
+    $prepStmt->bind_result($id);
 
-    while ($prepStmt->fetch()) {
-        $passwordUpdate = $password2;
-    }
-    //PW change
-    if (!empty($_POST["passwordNew"]) && checkPasswordHealth(cleanUserInput($_POST["passwordNew"]))) {
-        if (!isset($_POST["adminUpdate"])) {
-            $passwordOld = cleanUserInput($_POST["passwordOld"]);
-            //verify
-            if (password_verify($passwordOld, $password2)) {
-                $passwordUpdate = password_hash(cleanUserInput($_POST["passwordNew"]), PASSWORD_DEFAULT);
-            }
-        }
-    }
 
-    // Build the UPDATE query
-    $sql = "UPDATE users SET ";
-
-// Append each column with a new value
-    foreach ($setFields as $field) {
-        if($field != "adminUpdate" && $field != "update") {
-            $sql .= "$field = ?, ";
-        }
-    }
-
-// Remove the trailing comma and space
-    $sql = rtrim($sql, ", ");
-
-    $sql .= " WHERE username = ?";
-    echo "<br> UPDATE". $sql;
-// Prepare the statement
-    $stmt = $connection->prepare($sql);
-
-// Check if the statement preparation was successful
-    if ($stmt) {
-        // Dynamically bind parameters for each field
-        $types = '';
-       // $values = array();
-
-        foreach ($setFields as $value) {
-            // Determine the data type and add to $types
-            if (is_int($value)) {
-                $types .= 'i'; // Integer
-            } elseif (is_float($value)) {
-                $types .= 'd'; // Double
-            } else {
-                $types .= 's'; // String
-            }
-        }
-        //for username
-        $types .= 's';
-        echo "<br> Typesssss:". $types;
-
-        array_push($values, $username);
-        // Bind parameters dynamically
-        $stmt->bind_param($types, ...$values);
-
-        // Execute the statement
-        $result = $stmt->execute();
-
-    }
+    $id= $prepStmt->fetch();
+    return $id;
 }
 
 function fetchUser($username, $dbHost, $dbUsername, $dbPassword, $dbName)
@@ -327,23 +269,23 @@ function fetchUser($username, $dbHost, $dbUsername, $dbPassword, $dbName)
     $_SESSION["isActive"] = $isActive;
 }
 
-function fetchAllUsers($dbHost, $dbUsername, $dbPassword, $dbName)
-{
-    $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+    function fetchAllUsers($dbHost, $dbUsername, $dbPassword, $dbName)
+    {
+        $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
 
-    $select = "SELECT * FROM users";
-    $prepStmt = $connection->prepare($select);
-    $prepStmt->execute();
-    $result = $prepStmt->get_result();
-    return $result;
-}
+        $select = "SELECT * FROM users";
+        $prepStmt = $connection->prepare($select);
+        $prepStmt->execute();
+        $result = $prepStmt->get_result();
+        return $result;
+    }
 
-function getUserCount($dbHost, $dbUsername, $dbPassword, $dbName)
-{
-    $result = fetchAllUsers($dbHost, $dbUsername, $dbPassword, $dbName);
+    function getUserCount($dbHost, $dbUsername, $dbPassword, $dbName)
+    {
+        $result = fetchAllUsers($dbHost, $dbUsername, $dbPassword, $dbName);
 
-    $count = mysqli_num_rows($result);
-    return $count;
-}
+        $count = mysqli_num_rows($result);
+        return $count;
+    }
 
 ?>

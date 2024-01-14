@@ -1,4 +1,5 @@
- <?php session_start() ?>
+ <?php if (!isset($_SESSION)) session_start();
+ ?>
  <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="https://www.technikum-wien.at/fhtw-logo.svg" />

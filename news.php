@@ -20,25 +20,33 @@ include 'server.php';
 
 </head>
 <body>
-<div class=container justify-content-left>
-    <h1>News-Beiträge</h1>
+<div class=container-fluid>
+    <h1>News</h1>
 
     <?php
     fetchNews($dbHost,$dbUsername,$dbPassword,$dbName);
     ?>
-
+<br>
    
 <?php if(isset($_SESSION["userArr"])&&($_SESSION["isAdmin"]) == 1) :?>
     <form action="news.php" name = "newsEntry" method="POST" enctype="multipart/form-data">
     <form action="news.php" method="post" enctype="multipart/form-data">
-        <h2>Beitrag erstellen</h2>
-        <label for="title">Titel:</label>
-        <input type="text" name="title" id="title" required><br>
-
-        <label for="text">Text:</label>
-        <textarea name="text" id="text" required></textarea><br>
+        <div class="form-group">
+        <h2>Create News Entry</h2>
+            <div class="form-group col-md-3">
+        <label for="title" class="form-label">Titel:</label>
+        <input class="form-control border-primary" type="text" name="title" id="title" required><br>
+            </div>
+        <div class="form-group col-md-3">
+            <label for="text" class="form-label">Text</label>
+            <textarea class="form-control border-dark" name="text" id="text" rows="4" required></textarea>
+        </div>
+            <br>
+            <div class="form-group col-md-3">
         <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="newsEntry" name="newsEntry">
+        <input class="btn btn-outline-primary" type="submit" value="Post News" name="newsEntry">
+            </div>
+        </div>
     </form>
     <?php endif?>
     </div>

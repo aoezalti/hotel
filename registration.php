@@ -12,33 +12,6 @@ include 'server.php';
     </script>
 </head>
 
-<?php
-if(isset($_POST["registration"]))
-    if(checkPasswordHealth($_POST["password"]) && checkPasswordEquality($_POST["password"],$_POST["password_confirmation"])){
-    $salutation            = cleanUserInput(($_POST["salutation"]));
-    $vorname               = cleanUserInput(($_POST["inputVorname"]));
-    $nachname              = cleanUserInput(($_POST["inputNachname"]));
-    $user                  = cleanUserInput(($_POST["user"]));
-    $email                 = cleanUserInput(($_POST["email"]));
-    $password              = cleanUserInput(($_POST["password"]));
-    $password_confirmation = cleanUserInput(($_POST["password_confirmation"]));
-    $_SESSION["userArr"] = $user;
-    $_SESSION["loggedIn"] = true;
-    $_SESSION["registered"] = true;
-}
-else {
-    
-    if (!checkPasswordHealth($_POST["password"])) {
-        $pwCriteriaNotMet = "Das Passwort muss mindestens 5-stellig sein, Groß- und Kleinbuchstaben, sowie eine Zahl enthalten!";
-    }
-    if (!checkPasswordEquality($_POST["password"],$_POST["password_confirmation"])) {
-        $pwNotEqual = "Passwörter stimmen nicht überein!";
-    }
-  }
-
-  
-  ?>
-
 <div class="container">
     <div class="row justify-content-left">
         <?php if (!isset($_SESSION["registered"])) : ?>
