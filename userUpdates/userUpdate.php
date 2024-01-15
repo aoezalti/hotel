@@ -12,6 +12,7 @@ $userDuplicate = false;
 if (isset($_POST["userUpdate"])) {
     $update = "UPDATE users SET ";
     $id = getId($_SESSION["userArr"], $dbHost, $dbUsername, $dbPassword, $dbName);
+    
     foreach ($_POST as $key => $value) {
         //take new username value for check that is performed later 
         if ($key === "username") {
@@ -29,7 +30,7 @@ if (isset($_POST["userUpdate"])) {
                 if ($result != 0) {
                     echo "username duplicate";
                     $userDuplicate = true;
-                }else{
+                }elseif(!empty($value)){
                     $_SESSION["userArr"] = $value;
                 }
                 
@@ -38,7 +39,8 @@ if (isset($_POST["userUpdate"])) {
         
         if (!empty($value) && $key != "userUpdate") {
             //if user wants to change password, compare input of old pw to pw in db
-            if ($key === "passwordNew") {
+            if ($key === "passwordNew" && isset($_POST["passwordOld"])) {
+                echo "Old password has to be set!";
                 if (checkPasswordHealth(cleanUserInput($_POST["passwordNew"]))) {
                     $select = "SELECT password FROM users WHERE id=?";
                     $prepStmt = $connection->prepare($select);
@@ -58,17 +60,18 @@ if (isset($_POST["userUpdate"])) {
                         $value = password_hash(cleanUserInput($_POST["passwordNew"]), PASSWORD_DEFAULT);
                         $key = "password";
                     } elseif (!password_verify($passwordOld, $prevPassword)) {
-                        echo "<h1> Wrong value for old password</h1>";
-                        header("location: ./profile.php");
+                        $_SESSION["pwError"] = "Wrong value for old password";
+                        
                     }
                 } else {
-                    echo "<h1>Passwords don't match criteria</h1>";
+                    $_SESSION["pwError"] =  "Passwords don't match criteria";
                 }
+                $_SESSION["pwChanged"] ="Password changed";
             }
         
 
             // store the keys in the $setFields array
-            if ($key != "passwordOld" && $key != "passwordNew" && !$userDuplicate && $key!="userUpdate") {
+            if ($key != "passwordOld" && $key != "passwordNew" && !$userDuplicate ) {
                 $setFields[] = $key;
                 $values[] = $value;
             }

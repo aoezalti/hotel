@@ -42,7 +42,7 @@ if (isset($_POST['registration'])) {
     if (empty($password_1)) {
         array_push($errors, "Password is required");
     }
-    if (!checkPasswordHealth($password_1, $password_2)) {
+    if (!checkPasswordHealth($password_1)) {
         array_push($errors, "Password doesn't match password criteria (atleast 5 chars,
         lower + uppercase, atleast one number)");
     }
@@ -50,26 +50,22 @@ if (isset($_POST['registration'])) {
         array_push($errors, "The two passwords do not match");
     }
 
-    $user_check = "SELECT * FROM users WHERE username=? OR mail=? LIMIT 1";
+    $user_check = "SELECT username FROM users WHERE username=? LIMIT 1";
     $prepStmt = $connection->prepare($user_check);
 
     $user = $username; // Define $uname before binding it
     $email = $mail;
-    $prepStmt->bind_param("ss", $uname, $email);
+    $prepStmt->bind_param("s", $user);
     $prepStmt->execute();
-    $result = $prepStmt->get_result(); // get the mysqli result
-    $user = $result->fetch_assoc(); // fetch data
-
-    if ($user) {
-        if ($user['username'] === $username) {
+    $prepStmt->bind_result($fetchedUsername); // get the mysqli result
+    $prepStmt->fetch();
+   
+    
+        if ($fetchedUsername === $username) {
             array_push($errors, "Username already exists");
         }
-
-        if ($user['mail'] === $mail) {
-            array_push($errors, "Email already exists");
-        }
-    }
-
+    
+    //echo count($errors);
     if (count($errors) == 0) {
         $password = password_hash($password_1, PASSWORD_DEFAULT);
         // prepared statement
@@ -253,13 +249,13 @@ function fetchUser($username, $dbHost, $dbUsername, $dbPassword, $dbName)
     $prepStmt->bind_param("s", $username);
 
     $prepStmt->execute();
-    $prepStmt->bind_result($id, $mail, $firstname, $lastname, $password2, $isAdmin, $isActive, $username, $salutation);
+    $prepStmt->bind_result($id, $mail, $firstname, $lastname, $password2, $isAdmin, $isActive, $fetchedUser, $salutation);
 
     //var_dump($prepStmt); statement below needed?
 
     $prepStmt->fetch();
     $_SESSION["userID"] =$id;
-    $_SESSION["userArr"] = $username;
+    $_SESSION["userArr"] = $fetchedUser;
     $_SESSION["loggedIn"] = true;
     $_SESSION["isAdmin"] = $isAdmin;
     $_SESSION["anrede"] = $salutation;

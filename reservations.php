@@ -183,10 +183,13 @@ function checkAvailability($checkIn, $checkOut,$roomType,$dbHost, $dbUsername, $
     $prepStmt->close();
 
     //get booking count for duration
-    $select = "SELECT COUNT(*) FROM reservations WHERE checkIn >= ? AND checkOut <=? AND status=?";
+    $select = "SELECT COUNT(*) FROM reservations JOIN rooms ON reservations.roomID = rooms.id WHERE rooms.roomType =?  AND
+    ((checkIn >= ? AND checkIn <= ?) OR
+    (checkOut >= ? AND checkOut <= ?) OR
+    (checkIn <= ? AND checkOut >= ?)) AND reservations.status= ?";
     $prepStmt = $connection->prepare($select);
     $status = "confirmed";
-    $prepStmt->bind_param("sss", $checkIn,$checkOut,$status);
+    $prepStmt->bind_param("ssssssss", $roomType,$checkIn,$checkIn,$checkOut,$checkOut,$checkIn,$checkOut,$status);
     $prepStmt->execute();
     $prepStmt->bind_result($bookingCount);
     $prepStmt->fetch();

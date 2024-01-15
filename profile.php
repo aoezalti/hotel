@@ -1,8 +1,7 @@
 <?php
- include 'server.php';
- fetchUser($_SESSION["userArr"], $dbHost, $dbUsername, $dbPassword, $dbName);
-include 'nav.php';
+include 'server.php';
 include './userUpdates/userUpdate.php';
+include 'nav.php';
 
 ?>
 
@@ -22,10 +21,17 @@ include './userUpdates/userUpdate.php';
 <body>
 <div class="container-fluid">
     <div>
-        <?php if ($_SESSION["isAdmin"] === 0) :; ?>
+        <?php if ($_SESSION["isAdmin"] === 0) :; 
+        if(isset($_SESSION["pwError"])){
+            echo "<h4>" . $_SESSION["pwError"] . "</h4>";
+        } elseif(isset($_SESSION["pwChanged"])){
+            echo "<h4>" . $_SESSION["pwChanged"] . "</h4>";
+        }
+        ?>
         <h3> Profile overview </h3>
 
         <?php
+        
         fetchUser($_SESSION["userArr"], $dbHost, $dbUsername, $dbPassword, $dbName);
         echo "<h4> User: " . $_SESSION["userArr"] . "</h4>";
         echo "<h4> Salutation: " . $_SESSION["anrede"] . "</h4>";
@@ -105,6 +111,7 @@ include './userUpdates/userUpdate.php';
 </body>
 <div>
     <br>
+
     <?php elseif ($_SESSION["isAdmin"] === 1) :; ?>
         <?php 
         echo " <h4>Currently registered Users: " . getUserCount($dbHost, $dbUsername, $dbPassword, $dbName) ."</h4>"?>

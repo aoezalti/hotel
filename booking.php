@@ -56,7 +56,7 @@ include 'reservations.php';
 
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="breakfast" id="breakfast"/>
-                    <label class="form-check-label" for="breakfast">include breakfast (+€20/per Night and Person)</label>
+                    <label class="form-check-label" for="breakfast">include breakfast (+€20/per Night)</label>
 
                 </div>
 
