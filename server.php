@@ -257,7 +257,6 @@ function fetchUser($username, $dbHost, $dbUsername, $dbPassword, $dbName)
 
     //var_dump($prepStmt); statement below needed?
 
-
     $prepStmt->fetch();
     $_SESSION["userID"] =$id;
     $_SESSION["userArr"] = $username;

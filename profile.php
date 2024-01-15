@@ -1,7 +1,9 @@
 <?php
+ include 'server.php';
+ fetchUser($_SESSION["userArr"], $dbHost, $dbUsername, $dbPassword, $dbName);
 include 'nav.php';
-include 'server.php';
-include './userUpdates/userUpdate.php'
+include './userUpdates/userUpdate.php';
+
 ?>
 
 <!doctype html>
@@ -20,9 +22,6 @@ include './userUpdates/userUpdate.php'
 <body>
 <div class="container-fluid">
     <div>
-        <?php
-        echo "<h1> Welcome " . $_SESSION["userArr"] . "</h1>";
-        ?>
         <?php if ($_SESSION["isAdmin"] === 0) :; ?>
         <h3> Profile overview </h3>
 
@@ -52,14 +51,14 @@ include './userUpdates/userUpdate.php'
                 </div>
             </div>
             <div class="form-floating mb-2">
-                <input class="form-control border-primary" id="firstname" class="form-control" type="text"
+                <input class="form-control border-primary" id="firstname" name="firstname" class="form-control" type="text"
                        name="firstname" placeholder="" value=""/>
                 <label for="firstname">Firstname</label>
 
             </div>
 
             <div class="form-floating mb-3">
-                <input class="form-control border-primary" id="lastname" class="form-control" type="text"
+                <input class="form-control border-primary" id="lastname" name="lastname" class="form-control" type="text"
                        name="lastname" placeholder="" value=""/>
                 <label for="inputNachname">Lastname</label>
 
@@ -95,6 +94,7 @@ include './userUpdates/userUpdate.php'
                 <div class="col">
                     <input class="btn btn-outline-danger" type="reset" value="Reset">
                     <input class="btn btn-outline-primary" type="submit" name="userUpdate" value="Update">
+                    
                 </div>
             </div>
 

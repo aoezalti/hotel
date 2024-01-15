@@ -8,12 +8,34 @@ require_once("./dbaccess.php");
 
 $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
 $username = $_SESSION["userArr"];
-
+$userDuplicate = false;
 if (isset($_POST["userUpdate"])) {
-
     $update = "UPDATE users SET ";
     $id = getId($_SESSION["userArr"], $dbHost, $dbUsername, $dbPassword, $dbName);
     foreach ($_POST as $key => $value) {
+        //take new username value for check that is performed later 
+        if ($key === "username") {
+            
+                //check username duplicate 
+                $user_check = "SELECT count(*) FROM users WHERE username=?";
+                $prepStmt = $connection->prepare($user_check);
+
+                $prepStmt->bind_param("s", $value);
+                $prepStmt->execute();
+                $prepStmt->bind_result($result);
+                $prepStmt->store_result();
+                $prepStmt->fetch(); // get the mysqli result
+                
+                if ($result != 0) {
+                    echo "username duplicate";
+                    $userDuplicate = true;
+                }else{
+                    $_SESSION["userArr"] = $value;
+                }
+                
+                
+            }
+        
         if (!empty($value) && $key != "userUpdate") {
             //if user wants to change password, compare input of old pw to pw in db
             if ($key === "passwordNew") {
@@ -30,6 +52,8 @@ if (isset($_POST["userUpdate"])) {
                     $passwordOld = cleanUserInput($_POST["passwordOld"]);
 
                     //verify
+
+
                     if (password_verify($passwordOld, $prevPassword)) {
                         $value = password_hash(cleanUserInput($_POST["passwordNew"]), PASSWORD_DEFAULT);
                         $key = "password";
@@ -41,16 +65,18 @@ if (isset($_POST["userUpdate"])) {
                     echo "<h1>Passwords don't match criteria</h1>";
                 }
             }
+        
+
             // store the keys in the $setFields array
-            if ($key != "passwordOld" && $key != "passwordNew") {
+            if ($key != "passwordOld" && $key != "passwordNew" && !$userDuplicate && $key!="userUpdate") {
                 $setFields[] = $key;
                 $values[] = $value;
             }
             //echo "Field $key is set with value $value.<br>";
-        } else {
+         else {
             $unsetFields[] = $key;
             //echo "Field $key is not set.<br>";
-        }
+        }}
     }
 
 
@@ -61,22 +87,22 @@ if (isset($_POST["userUpdate"])) {
         $sqlFields = implode(',', $setFields);
 
 
-// Build the UPDATE query
+        // Build the UPDATE query
         $updateStmt = "UPDATE users SET ";
 
         foreach ($setFields as $field) {
             $updateStmt .= "$field = ?, ";
         }
 
-// Remove the trailing comma and space
+        // Remove the trailing comma and space
         $updateStmt = rtrim($updateStmt, ", ");
 
         $updateStmt .= " WHERE id= ?";
-
-// Prepare the statement
+        
+        // Prepare the statement
         $stmt = $connection->prepare($updateStmt);
 
-// Check if the statement preparation was successful
+        // Check if the statement preparation was successful
         if ($stmt) {
             // Dynamically bind parameters for each field
             $types = '';
@@ -93,16 +119,17 @@ if (isset($_POST["userUpdate"])) {
             }
             //for id
             $types .= 'i';
-
+            var_dump($values);
             array_push($values, $id);
             // Bind parameters dynamically
             $stmt->bind_param($types, ...$values);
 
-            // Execute the statement
-            $result = $stmt->execute();
 
-
+           
+            
+            $stmt->execute();
         }
     }
 }
+
 ?>
