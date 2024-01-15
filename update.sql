@@ -12,6 +12,6 @@ ALTER TABLE rooms
 ALTER TABLE rooms
     ADD `roomType` enum('single', 'double', 'deluxe') NOT NULL;
 
-INSERT INTO rooms(pricePerNight,roomType) VALUES (50,'single');
-INSERT INTO rooms(pricePerNight,roomType) VALUES (100,'double');
-INSERT INTO rooms(pricePerNight,roomType) VALUES (150,'deluxe');
+INSERT INTO rooms(maxRoomCount, pricePerNight,roomType) VALUES (1,50,'single');
+INSERT INTO rooms(maxRoomCount,pricePerNight,roomType) VALUES (20,100,'double');
+INSERT INTO rooms(maxRoomCount,pricePerNight,roomType) VALUES (5,150,'deluxe');

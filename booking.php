@@ -19,16 +19,7 @@ include 'reservations.php';
 <body>
 
 <div class="container">
-<?php
-$result = fetchAllRooms($dbHost, $dbUsername, $dbPassword, $dbName);
-$count=0;
-while ($row = $result->fetch_assoc()) {
-    $count += 1;
-    //echo $row["roomType"] .'<br>';
-}
-echo '<h2>Available rooms: ' . $count . '</h2>';
 
-?>
 </div>
 <div class="container">
     <div class="row justify-content-left">
@@ -65,19 +56,19 @@ echo '<h2>Available rooms: ' . $count . '</h2>';
 
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="breakfast" id="breakfast"/>
-                    <label class="form-check-label" for="breakfast">include breakfast</label>
+                    <label class="form-check-label" for="breakfast">include breakfast (+€20/per Night and Person)</label>
 
                 </div>
 
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="parking" id="parking"/>
-                    <label class="form-check-label" for="parking">include parking</label>
+                    <label class="form-check-label" for="parking">include parking (+€10 per Night)</label>
 
                 </div>
 
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="pets" id="pets"/>
-                    <label class="form-check-label" for="pets">include pets</label>
+                    <label class="form-check-label" for="pets">include pets (+€30 cleaning fee)</label>
 
                 </div>
                 <br>
@@ -95,7 +86,11 @@ echo '<h2>Available rooms: ' . $count . '</h2>';
 </div>
 <br>
 <div class="container">
-<h3>Already booked reservations: 0</h3>
+<h3>Already booked reservations: </h3>
+<?php
+    $reservations = fetchReservations($_SESSION["userID"],$dbHost, $dbUsername, $dbPassword, $dbName);
+    echo $reservations;                   
+?>   
     </div>
     
 </body>

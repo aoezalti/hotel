@@ -106,8 +106,12 @@ include './userUpdates/userUpdate.php'
 <div>
     <br>
     <?php elseif ($_SESSION["isAdmin"] === 1) :; ?>
-        <?php echo " <h4>Currently registered Users: " . getUserCount($dbHost, $dbUsername, $dbPassword, $dbName) ?>
-        <a href="./userManagement.php" class="btn btn-primary" role="button">Manage users</a>
+        <?php 
+        echo " <h4>Currently registered Users: " . getUserCount($dbHost, $dbUsername, $dbPassword, $dbName) ."</h4>"?>
+        <a href="./userManagement.php" class="btn btn-primary" role="button">Manage Users</a>
+        <?php 
+        echo " <h4>New bookings: " . getBookingCount($dbHost, $dbUsername, $dbPassword, $dbName) ."</h4>"?>
+        <a href="./bookingManagement.php" class="btn btn-primary" role="button">Manage Bookings</a>
     <?php endif ?>
 </div>
 <br>

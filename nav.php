@@ -39,6 +39,10 @@
             <li><a class="dropdown-item" href="./impressum.php">Imprint</a></li>
           </ul>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="./rooms.php" aria-disabled="false">Rooms</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link <?php if(isset($_SESSION["loggedIn"])){echo "";}else{echo "disabled";} ?>" href="./booking.php" aria-disabled="false">Book now</a>
         </li>

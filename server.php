@@ -129,6 +129,7 @@ if (isset($_POST["login"])) {
         $_SESSION["nachname"] = $lastname;
         $_SESSION["mail"] = $mail;
         $_SESSION["isActive"] = $isActive;
+        $_SESSION["userID"] = $id;
     } elseif (password_verify($password1, $password2) && $isActive === 0) {
         echo "<h1>Account inactive please contact Admin!</h1>";
     } elseif (!password_verify($password1, $password2)) {
@@ -238,7 +239,7 @@ function getId($username, $dbHost, $dbUsername, $dbPassword, $dbName)
     $prepStmt->bind_result($id);
 
 
-    $id= $prepStmt->fetch();
+    $prepStmt->fetch();
     return $id;
 }
 
@@ -258,6 +259,7 @@ function fetchUser($username, $dbHost, $dbUsername, $dbPassword, $dbName)
 
 
     $prepStmt->fetch();
+    $_SESSION["userID"] =$id;
     $_SESSION["userArr"] = $username;
     $_SESSION["loggedIn"] = true;
     $_SESSION["isAdmin"] = $isAdmin;
@@ -285,6 +287,20 @@ function fetchUser($username, $dbHost, $dbUsername, $dbPassword, $dbName)
 
         $count = mysqli_num_rows($result);
         return $count;
+    }
+    function getBookingCount($dbHost, $dbUsername, $dbPassword, $dbName){
+
+        $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+        $select = "SELECT COUNT(*) FROM reservations WHERE status=?";
+        $prepStmt = $connection->prepare($select);
+        $status = "new";
+        $prepStmt->bind_param("s", $status);
+        $prepStmt->execute();
+        $prepStmt->bind_result($count);
+        $prepStmt->fetch();
+        $connection ->close();
+        return $count;
+        
     }
 
 ?>

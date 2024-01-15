@@ -15,8 +15,10 @@ if (isset($_POST["adminUpdate"])) {
         echo "Please select a username from the dropdown!";
     }
     $id = getId($_POST["username"], $dbHost, $dbUsername, $dbPassword, $dbName);
+    $setFields = array();
+    
     foreach ($_POST as $key => $value) {
-        if (!empty($_POST[$key]) && $key != "adminUpdate" && $key != "username") {
+        if ($_POST[$key] !=="" && $key != "adminUpdate" && $key != "username") {
             if ($key === "passwordNew") {
                 $key = "password";
                 if (checkPasswordHealth(cleanUserInput($value))) {
@@ -77,4 +79,6 @@ if (isset($_POST["adminUpdate"])) {
         $result = $stmt->execute();
 
     }
+
+    
 }
