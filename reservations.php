@@ -200,9 +200,6 @@ function checkAvailability($checkIn, $checkOut,$roomType,$dbHost, $dbUsername, $
     }if($bookingCount>=$roomCount){
         return false;
     }
-
-
-
 }
 
 ?>
