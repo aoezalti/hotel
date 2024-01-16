@@ -37,6 +37,19 @@ include 'nav.php';
      <dd>whateverbooking@randomDomain.com</dd>
     <dt>Mitgliedschaft</dt>
     <dd>WKO, ÖHV </dd>
+
+          <div class="container">
+              <div class="row">
+                  <h2>Hotel owners</h2>
+                  <div class="col-md-4">
+                      <h4>Ayse</h4>
+                      <img src="assets/aye_ayse.png" class="img-fluid" alt="Single Room">
+                  </div>
+                  <div class="col-md-4">
+                      <h4>Alex</h4>
+                      <img src="assets/inhaber.jpg" class="img-fluid" alt="Double Room">
+                  </div>
+              </div>
     <br>
     <h2>Hinweise</h2>
     <dd>

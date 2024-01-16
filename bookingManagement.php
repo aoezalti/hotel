@@ -4,18 +4,17 @@ include 'server.php';
 include './userUpdates/adminUpdate.php';
 
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+if (isset($_POST["changeStatus"])) {
     require_once("./dbaccess.php");
     $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
     // Get the bookingID and status from the $_POST variables
 
-   
     $bookingID = $_POST['bookingID'];
     $status = $_POST['status'];
 
     // Prepare the SQL statement
     $stmt = $connection->prepare("UPDATE reservations SET status = ? WHERE id = ?");
-    
+
     // Bind the status and bookingID to the SQL statement
     $stmt->bind_param("si", $status, $bookingID);
 
@@ -28,8 +27,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 ?>
 
-<!doctype html>
-<html lang="en">
+    <!doctype html>
+    <html lang="en">
 
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -45,17 +44,38 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <div class="container-fluid">
     <table class="table table-striped">
         <div class="table responsive">
-            
+
             <tbody>
             <?php
-            $result = getAllBookings($dbHost, $dbUsername, $dbPassword, $dbName);
+
+            if (isset($_POST["filter"])) {
+                foreach ($_POST as $key => $value) {
+                    if ($value == "on") {
+                        $filters[] = $key;
+                    }
+                }
+                if (!empty($filters)) {
+                    $filterStatus = implode(',', $filters);
+                }
+            }
+
+
+            if (empty($filters)) {
+                $result = getAllBookings($dbHost, $dbUsername, $dbPassword, $dbName);
+            } else {
+                $result = getFilteredBookings($dbHost, $dbUsername, $dbPassword, $dbName, $filterStatus);
+
+            }
             $rows = $result;
 
             // Define the table headers
-            $headers = array("bookingID","start_date", "end_date", "breakfast", "parking", "pets", "bookingTime", "status", "totalPrice", "userID", "roomType");
-            
+            $headers = array("bookingID", "start_date", "end_date", "breakfast", "parking", "pets", "bookingTime", "status", "totalPrice", "userID", "roomType");
+
             // Generate the table
-            echo "<table>";
+
+            echo "<div class=\"container-fluid\">";
+            echo "<table class=\"table table-striped\">";
+            echo "<div class=\"table responsive\">";
             echo "<thead><tr>";
             foreach ($headers as $header) {
                 echo "<th>$header</th>";
@@ -78,8 +98,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 echo "</tr>";
             }
             echo "</tbody>";
+            echo "</div>";
             echo "</table>";
-            
+
             ?>
             </tbody>
         </div>
@@ -88,13 +109,49 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <br><br>
 
 
-
 </body>
 
 
 <?php
 
-function getAllBookings($dbHost, $dbUsername, $dbPassword, $dbName){
+function getFilteredBookings($dbHost, $dbUsername, $dbPassword, $dbName, $filterStatus)
+{
+
+    $setFilters = explode(',', $filterStatus);
+    $placeholders = implode(',', array_fill(0, count($setFilters), '?'));
+    $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+    $select = "SELECT reservations.id, reservations.checkIn, reservations.checkOut, reservations.breakfast, reservations.parking,reservations.pets,reservations.bookingTime,reservations.status,reservations.totalPrice,reservations.userID,rooms.roomType FROM reservations JOIN rooms on reservations.roomID = rooms.id WHERE reservations.status IN ($placeholders)";
+    $prepStmt = $connection->prepare($select);
+    $types = str_repeat('s', count($setFilters));
+    $prepStmt->bind_param($types, ...$setFilters);
+
+    $prepStmt->execute();
+    $prepStmt->bind_result($id, $checkIn, $checkOut, $breakfast, $parking, $pets, $bookingTime, $status, $totalPrice, $userID, $roomType);
+
+    $reservations = array();
+    while ($prepStmt->fetch()) {
+        $reservations[] = array(
+            "bookingID" => $id,
+            "start_date" => $checkIn,
+            "end_date" => $checkOut,
+            "breakfast" => $breakfast,
+            "parking" => $parking,
+            "pets" => $pets,
+            "bookingTime" => $bookingTime,
+            "status" => $status,
+            "totalPrice" => $totalPrice,
+            "userID" => $userID,
+            "roomType" => $roomType
+        );
+    }
+    $connection->close();
+
+    return $reservations;
+}
+
+function getAllBookings($dbHost, $dbUsername, $dbPassword, $dbName)
+{
 
     $connection = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
 
@@ -102,12 +159,12 @@ function getAllBookings($dbHost, $dbUsername, $dbPassword, $dbName){
     $prepStmt = $connection->prepare($select);
     
     $prepStmt->execute();
-    $prepStmt->bind_result($id,$checkIn, $checkOut, $breakfast, $parking,$pets,$bookingTime,$status,$totalPrice,$userID,$roomType );
+    $prepStmt->bind_result($id, $checkIn, $checkOut, $breakfast, $parking, $pets, $bookingTime, $status, $totalPrice, $userID, $roomType);
 
     $reservations = array();
-    while($prepStmt->fetch()){
+    while ($prepStmt->fetch()) {
         $reservations[] = array(
-            "bookingID" => $id ,
+            "bookingID" => $id,
             "start_date" => $checkIn,
             "end_date" => $checkOut,
             "breakfast" => $breakfast,

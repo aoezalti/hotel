@@ -46,7 +46,6 @@ if (isset($_POST["userUpdate"])) {
                     $prepStmt = $connection->prepare($select);
 
                     $prepStmt->bind_param("i", $id);
-
                     $prepStmt->execute();
                     $prepStmt->bind_result($prevPassword);
                     $prepStmt->store_result();
@@ -54,8 +53,6 @@ if (isset($_POST["userUpdate"])) {
                     $passwordOld = cleanUserInput($_POST["passwordOld"]);
 
                     //verify
-
-
                     if (password_verify($passwordOld, $prevPassword)) {
                         $value = password_hash(cleanUserInput($_POST["passwordNew"]), PASSWORD_DEFAULT);
                         $key = "password";
